@@ -396,11 +396,11 @@ tr:hover td { background: #f8f9fc; }
 
 <script>
 // ═══════════════════════════════════════════════════════════
-// CONFIG  ← fill these in before uploading to GitHub Pages
+// CONFIG  ← paste your Cloudflare Worker URL here after deploying
 // ═══════════════════════════════════════════════════════════
-const JIRA_BASE  = 'https://mysnaplogic.atlassian.net';
-const JIRA_EMAIL = 'ssengupta@snaplogic.com';    // e.g. name@company.com
-const JIRA_TOKEN = 'ATATT3xFfGF0VdtGkfZBvjOeBz_iFPRyUkpZiB9A__mJQR3B4I0X4aAOwhfMpqtYfob1hhwscCgNqmpO1TcAN7DzfhrlRp-lBCTVeBRp8D-7K7Eb8OJ0csZst9fV1rWfV8D5MRsKcwH3FXzf0ECTLtFMFC41-h4ZEDZTLIcryxN4XL1u44dNpF8=B77A1016';    // Atlassian API token
+const JIRA_PROXY = 'https://jira-proxy.subhajit1975.workers.dev';
+// e.g. 'https://jira-proxy.yourname.workers.dev'
+// Your email + API token are stored as Worker Secrets in Cloudflare — not here
 // ────────────────────────────────────────────────────────────
 
 // ═══════════════════════════════════════════════════════════
@@ -433,18 +433,13 @@ let csvData = [];
 // JIRA API
 // ═══════════════════════════════════════════════════════════
 async function jiraGet(path, params = {}) {
-  const url = new URL(`${JIRA_BASE}/rest/api/3${path}`);
+  const url = new URL(`${JIRA_PROXY}${path}`);
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, String(v)));
   let r;
   try {
-    r = await fetch(url.toString(), {
-      headers: {
-        'Authorization': 'Basic ' + btoa(JIRA_EMAIL + ':' + JIRA_TOKEN),
-        'Accept': 'application/json'
-      }
-    });
+    r = await fetch(url.toString());
   } catch (e) {
-    throw new Error('Network error — possible CORS issue. Ensure the GitHub Pages URL is trusted or check browser console.');
+    throw new Error('Network error — check that your Cloudflare Worker is deployed and running.');
   }
   if (!r.ok) {
     let msg = `HTTP ${r.status}`;
