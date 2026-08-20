@@ -454,7 +454,7 @@ async function fetchAll(jql, fields) {
   let start = 0, total = Infinity, issues = [];
   while (start < total) {
     statusInfo(`<span class="spin"></span>Loading… ${issues.length} issues`);
-    const d = await jiraGet('/search', {
+    const d = await jiraGet('/search/jql', {
       jql, maxResults: size, startAt: start,
       fields: fields.join(','), validateQuery: 'warn'
     });
