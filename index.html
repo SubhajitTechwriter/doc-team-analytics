@@ -928,7 +928,7 @@ async function fetchIssues() {
       'summary','resolution','status','assignee','issuetype',
       'priority','fixVersions','project', S.spField
     ];
-    const { issues, total } = await fetchAll(filter.jql + ' ORDER BY fixVersion ASC', FIELDS);
+    const { issues, total } = await fetchAll('(' + filter.jql + ') AND created >= -365d ORDER BY fixVersion ASC', FIELDS);
     S.allIssues   = issues;
     S.fixVersions = extractFVs(issues);
 
