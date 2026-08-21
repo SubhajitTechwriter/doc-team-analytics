@@ -1203,11 +1203,7 @@ async function handleFile(file) {
     S.spField = document.getElementById('spField').value.trim() || 'Story Points';
     const headers = rows[0].map(String);
     const cols = detectCols(headers);
-    console.log('CSV headers:', headers);
-    console.log('Detected cols:', cols);
-    const fvCols = Array.isArray(cols.fixversions) ? cols.fixversions : [cols.fixversions];
-    const fvLabel = fvCols.length ? `cols ${fvCols.join(',')} ("${headers[fvCols[0]]||'NOT FOUND'}")` : 'NOT FOUND';
-    statusInfo(`Columns — Fix Versions: ${fvLabel} [${fvCols.length}x], Assignee: col ${cols.assignee} ("${headers[cols.assignee]||'NOT FOUND'}")`);
+    console.log('Detected cols:', cols, '| Headers:', headers);
     const issues = rows.slice(1)
       .filter(r => r.some(c => String(c||'').trim()))
       .map(r => rowToIssue(r, cols));
@@ -1231,6 +1227,22 @@ async function handleFile(file) {
     const now = new Date();
     const ts = now.toLocaleString();
     try { localStorage.setItem('docteam_last_upload', JSON.stringify({file: file.name, ts, issues: issues.length, fvs: S.fixVersions.length})); } catch(_){}
+
+    if (S.fixVersions.length === 0) {
+      const fvCols = Array.isArray(cols.fixversions) ? cols.fixversions : (cols.fixversions >= 0 ? [cols.fixversions] : []);
+      const sampleRow = rows[1] || [];
+      const diagFV = fvCols.length
+        ? `header="${headers[fvCols[0]]}" cols=[${fvCols.join(',')}] row1=[${fvCols.map(i=>`"${String(sampleRow[i]||'').trim()||'(empty)'}"` ).join(', ')}]`
+        : 'NO Fix Version column detected — column not found in headers';
+      const diagAssignee = cols.assignee >= 0
+        ? `"${String(sampleRow[cols.assignee]||'').trim()||'(empty)'}"` : 'NOT DETECTED';
+      document.getElementById('metaLine').textContent =
+        `${S.filterName}  -  0 FVs  -  ${issues.length} issues  -  uploaded ${ts}`;
+      statusWarn(`0 Fix Versions found. Diagnostic — FV: ${diagFV} | Assignee sample: ${diagAssignee}`);
+      render();
+      return;
+    }
+
     statusOk(`Loaded ${issues.length} issues, ${S.fixVersions.length} Fix Versions from ${esc(file.name)}`);
     document.getElementById('metaLine').textContent =
       `${S.filterName}  -  ${S.fixVersions.length} FVs  -  ${issues.length} issues  -  uploaded ${ts}`;
