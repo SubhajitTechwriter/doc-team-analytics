@@ -306,14 +306,22 @@ tr:hover td { background: #f8f9fc; }
 <div id="uploadZone">
   <div class="upload-box" id="uploadBox">
     <div class="upload-ico">&#128202;</div>
-    <div class="upload-title">Drop your Jira export here</div>
-    <div class="upload-sub">Accepts .csv and .xlsx files exported from Jira</div>
-    <div class="upload-btn">Browse Files</div>
+    <div class="upload-title">Drag &amp; drop your Jira CSV export here</div>
+    <div class="upload-sub">Export from Jira: Issues &rarr; Export Issues &rarr; CSV &mdash; then drag the file here</div>
+    <div style="margin-top:18px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="upload-btn" id="pasteBtn" style="pointer-events:auto;cursor:pointer;border:none;">Or paste CSV text</button>
+    </div>
   </div>
-  <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" style="display:none">
+  <div id="pasteZone" style="display:none;margin-top:12px;">
+    <textarea id="pasteInput" style="width:100%;height:140px;border:1.5px solid #dfe1e6;border-radius:8px;padding:10px;font-size:12px;font-family:monospace;resize:vertical;" placeholder="Paste CSV content here (Ctrl+A in Notepad, then Ctrl+C, then Ctrl+V here)"></textarea>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn-reload" id="pasteSubmit">Load Data</button>
+      <button class="btn-nl-clear" id="pasteCancel">Cancel</button>
+    </div>
+  </div>
   <div class="upload-steps">
     <div class="upload-step"><strong>1. Export from Jira</strong>Issues &rarr; Export &rarr; CSV</div>
-    <div class="upload-step"><strong>2. Upload here</strong>Drop the file or click Browse</div>
+    <div class="upload-step"><strong>2. Drag here</strong>Drop the .csv file onto the box above</div>
     <div class="upload-step"><strong>3. Explore</strong>Charts and filters render instantly</div>
   </div>
 </div>
@@ -1212,6 +1220,29 @@ async function handleFile(file) {
   }
 }
 
+async function handlePastedCSV(text) {
+  statusInfo('<span class="spin"></span> Parsing pasted data...');
+  try {
+    const rows = parseCSVText(text);
+    if (rows.length < 2) { statusError('Could not parse CSV — make sure you copied the full file including the header row.'); return; }
+    S.spField = document.getElementById('spField').value.trim() || 'Story Points';
+    const cols = detectCols(rows[0].map(String));
+    const issues = rows.slice(1).filter(r => r.some(c => String(c||'').trim())).map(r => rowToIssue(r, cols));
+    if (!issues.length) { statusError('No data rows found.'); return; }
+    S.allIssues = issues; S.filterName = 'Pasted CSV';
+    S.fixVersions = extractFVs(issues); S.selectedFVs = []; S.filterAssignees = []; S.filterTypes = [];
+    populateRangeSelects(S.fixVersions); populateMultiSelects(S.allIssues); setControlsEnabled(true);
+    document.getElementById('pasteZone').style.display = 'none';
+    document.getElementById('uploadZone').style.display = 'none';
+    document.getElementById('contentArea').classList.add('on');
+    const now = new Date();
+    try { localStorage.setItem('docteam_last_upload', JSON.stringify({file:'Pasted CSV', ts:now.toLocaleString(), issues:issues.length, fvs:S.fixVersions.length})); } catch(_){}
+    statusOk(`Loaded ${issues.length} issues, ${S.fixVersions.length} Fix Versions`);
+    document.getElementById('metaLine').textContent = `Pasted CSV  -  ${S.fixVersions.length} FVs  -  ${issues.length} issues  -  ${now.toLocaleTimeString()}`;
+    render();
+  } catch(e) { statusError(`Parse error: ${e.message}`); }
+}
+
 // ═══════════════════════════════════════════════════
 // TOGGLE HELPER
 // ═══════════════════════════════════════════════════
@@ -1245,16 +1276,29 @@ try {
   }
 } catch(_){}
 
-// Upload zone
+// Upload zone — drag & drop + paste (no file picker)
 const uploadBox = document.getElementById('uploadBox');
-const fileInput = document.getElementById('fileInput');
-uploadBox.addEventListener('click', e => { e.stopPropagation(); fileInput.click(); });
-fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
 uploadBox.addEventListener('dragover', e => { e.preventDefault(); uploadBox.classList.add('drag'); });
 uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('drag'));
 uploadBox.addEventListener('drop', e => {
   e.preventDefault(); uploadBox.classList.remove('drag');
   if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+
+// Paste option
+document.getElementById('pasteBtn').addEventListener('click', e => {
+  e.stopPropagation();
+  document.getElementById('pasteZone').style.display = 'block';
+  document.getElementById('pasteInput').focus();
+});
+document.getElementById('pasteCancel').addEventListener('click', () => {
+  document.getElementById('pasteZone').style.display = 'none';
+  document.getElementById('pasteInput').value = '';
+});
+document.getElementById('pasteSubmit').addEventListener('click', () => {
+  const text = document.getElementById('pasteInput').value.trim();
+  if (!text) { statusError('Nothing pasted — copy the CSV text first.'); return; }
+  handlePastedCSV(text);
 });
 
 // New file button in settings
