@@ -1232,15 +1232,14 @@ async function handleFile(file) {
       const fvCols = Array.isArray(cols.fixversions) ? cols.fixversions : (cols.fixversions >= 0 ? [cols.fixversions] : []);
       const sampleRow = rows[1] || [];
       const diagFV = fvCols.length
-        ? `header="${headers[fvCols[0]]}" cols=[${fvCols.join(',')}] row1=[${fvCols.map(i=>`"${String(sampleRow[i]||'').trim()||'(empty)'}"` ).join(', ')}]`
-        : 'NO Fix Version column detected — column not found in headers';
+        ? `header="${headers[fvCols[0]]}" cols=[${fvCols.join(',')}] row1 values=[${fvCols.map(i=>`"${String(sampleRow[i]||'').trim()||'(empty)'}"` ).join(', ')}]`
+        : 'NO Fix Version column detected in headers';
       const diagAssignee = cols.assignee >= 0
         ? `"${String(sampleRow[cols.assignee]||'').trim()||'(empty)'}"` : 'NOT DETECTED';
       document.getElementById('metaLine').textContent =
         `${S.filterName}  -  0 FVs  -  ${issues.length} issues  -  uploaded ${ts}`;
-      statusWarn(`0 Fix Versions found. Diagnostic — FV: ${diagFV} | Assignee sample: ${diagAssignee}`);
-      render();
-      return;
+      statusWarn(`0 Fix Versions found. FV detection: ${diagFV} | Assignee row1: ${diagAssignee}`);
+      return;  // do NOT call render() — it would overwrite this message
     }
 
     statusOk(`Loaded ${issues.length} issues, ${S.fixVersions.length} Fix Versions from ${esc(file.name)}`);
