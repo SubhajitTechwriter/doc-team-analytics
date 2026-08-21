@@ -11,13 +11,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: #f5f6fa; color: #172b4d; padding: 24px 22px; min-width: 680px;
 }
-
-/* ── Header ── */
 .page-hdr { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px; }
 h1 { font-size: 22px; font-weight: 700; }
 .meta-line { color: #6b778c; font-size: 12px; margin-bottom: 16px; }
-
-/* ── Settings gear ── */
 .gear-wrap { position: relative; }
 .gear-btn {
   background: none; border: 1.5px solid #dfe1e6; border-radius: 6px;
@@ -28,8 +24,8 @@ h1 { font-size: 22px; font-weight: 700; }
 .gear-panel {
   display: none; position: absolute; right: 0; top: calc(100% + 6px);
   background: #fff; border: 1.5px solid #dfe1e6; border-radius: 8px;
-  box-shadow: 0 4px 14px rgba(0,0,0,.12); padding: 14px 16px; z-index: 100;
-  min-width: 360px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12); padding: 14px 16px; z-index: 300;
+  min-width: 320px;
 }
 .gear-panel.open { display: block; }
 .gear-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
@@ -41,7 +37,29 @@ input[type="text"] {
 }
 input[type="text"]:focus { outline: none; border-color: #0052cc; }
 
-/* ── Controls card ── */
+/* Upload zone */
+#uploadZone { margin-bottom: 16px; }
+.upload-box {
+  border: 2px dashed #dfe1e6; border-radius: 12px; padding: 52px 24px;
+  text-align: center; cursor: pointer; transition: all .2s; background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.upload-box:hover, .upload-box.drag { border-color: #0052cc; background: #f0f4ff; }
+.upload-box input[type="file"] { display: none; }
+.upload-ico { font-size: 44px; margin-bottom: 14px; }
+.upload-title { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+.upload-sub { font-size: 13px; color: #6b778c; margin-bottom: 18px; }
+.upload-btn {
+  display: inline-block; padding: 8px 22px; background: #0052cc; color: #fff;
+  border-radius: 6px; font-size: 13px; font-weight: 600; pointer-events: none;
+}
+.upload-steps {
+  margin-top: 22px; display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+}
+.upload-step { font-size: 12px; color: #6b778c; text-align: center; max-width: 140px; }
+.upload-step strong { display: block; color: #172b4d; margin-bottom: 3px; font-size: 13px; }
+
+/* Controls card */
 .ctrl-card {
   background: #fff; border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 16px 20px; margin-bottom: 16px;
@@ -60,7 +78,42 @@ select:focus { outline: none; border-color: #0052cc; }
 select:disabled { opacity: .5; cursor: default; }
 .vsep { width: 1px; height: 26px; background: #dfe1e6; flex-shrink: 0; }
 
-/* ── Toggle groups ── */
+/* Multi-select */
+.ms-wrap { position: relative; }
+.ms-trigger {
+  border: 1.5px solid #dfe1e6; border-radius: 6px; padding: 5px 28px 5px 9px;
+  font-size: 13px; color: #172b4d; background: #fafbfc; cursor: pointer;
+  display: flex; align-items: center; gap: 6px; white-space: nowrap;
+  user-select: none; min-width: 130px; position: relative;
+}
+.ms-trigger::after { content: "\25BE"; position: absolute; right: 9px; font-size: 10px; color: #6b778c; }
+.ms-trigger:hover { border-color: #0052cc; }
+.ms-trigger.disabled { opacity: .5; cursor: default; pointer-events: none; }
+.ms-trigger.active  { border-color: #0052cc; background: #e8f0fe; color: #0052cc; font-weight: 600; }
+.ms-dropdown {
+  display: none; position: absolute; top: calc(100% + 4px); left: 0; z-index: 250;
+  background: #fff; border: 1.5px solid #dfe1e6; border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.14); min-width: 210px; max-height: 270px;
+  overflow-y: auto;
+}
+.ms-dropdown.open { display: block; }
+.ms-search-row { padding: 8px 10px 4px; position: sticky; top: 0; background: #fff; z-index: 1; }
+.ms-search-row input {
+  width: 100%; border: 1.5px solid #dfe1e6; border-radius: 5px; padding: 4px 8px;
+  font-size: 12px; color: #172b4d; background: #fafbfc; flex: none;
+}
+.ms-actions { display: flex; gap: 8px; padding: 4px 10px 6px; border-bottom: 1px solid #f0f1f3; }
+.ms-act { font-size: 11px; color: #0052cc; cursor: pointer; background: none; border: none; padding: 0; }
+.ms-act:hover { text-decoration: underline; }
+.ms-item {
+  display: flex; align-items: center; gap: 8px; padding: 7px 12px;
+  font-size: 13px; cursor: pointer;
+}
+.ms-item:hover { background: #f4f5f7; }
+.ms-item input[type="checkbox"] { accent-color: #0052cc; cursor: pointer; flex-shrink: 0; }
+.ms-empty { padding: 14px 12px; font-size: 12px; color: #97a0af; text-align: center; }
+
+/* Toggle groups */
 .tog { display: flex; border-radius: 6px; overflow: hidden; border: 1.5px solid #dfe1e6; }
 .tog-btn {
   padding: 5px 12px; font-size: 12px; font-weight: 500;
@@ -73,7 +126,7 @@ select:disabled { opacity: .5; cursor: default; }
 .tog-btn.active { background: #0052cc; color: #fff; }
 .tog-btn:disabled { opacity: .5; cursor: default; pointer-events: none; }
 
-/* ── Buttons ── */
+/* Buttons */
 .btn-sm {
   background: #fafbfc; color: #0052cc; border: 1.5px solid #0052cc;
   border-radius: 6px; padding: 5px 13px; font-size: 12px; font-weight: 600; cursor: pointer;
@@ -86,7 +139,7 @@ select:disabled { opacity: .5; cursor: default; }
 }
 .btn-reload:hover { background: #0065ff; }
 
-/* ── Status bar ── */
+/* Status bar */
 .status { border-radius: 8px; padding: 8px 15px; font-size: 12px; margin-bottom: 14px; display: none; }
 .status.info  { background: #e3f2fd; color: #1565c0; display: block; }
 .status.ok    { background: #e8f5e9; color: #1b5e20; display: block; }
@@ -100,14 +153,58 @@ select:disabled { opacity: .5; cursor: default; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Loading skeleton ── */
-.skeleton-wrap { margin-bottom: 20px; }
-.skel-tiles { display: flex; gap: 14px; margin-bottom: 18px; }
-.skel-tile { flex: 1; height: 84px; border-radius: 10px; background: #e8e8e8; animation: pulse 1.4s ease-in-out infinite; }
-.skel-chart { height: 220px; border-radius: 12px; background: #e8e8e8; animation: pulse 1.4s ease-in-out infinite; margin-bottom: 18px; }
-@keyframes pulse { 0%,100%{opacity:.55} 50%{opacity:1} }
+/* NL Query */
+.nl-section {
+  background: #fff; border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-bottom: 16px; overflow: hidden;
+}
+.nl-header {
+  padding: 12px 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; user-select: none;
+}
+.nl-header:hover { background: #f4f5f7; }
+.nl-caret { font-size: 11px; color: #6b778c; transition: transform .2s; }
+.nl-caret.open { transform: rotate(180deg); }
+.nl-body { display: none; padding: 0 20px 16px; }
+.nl-body.open { display: block; }
+textarea.nl-input {
+  width: 100%; border: 1.5px solid #dfe1e6; border-radius: 8px;
+  padding: 10px 13px; font-size: 13px; color: #172b4d; background: #fafbfc;
+  resize: vertical; min-height: 78px; font-family: inherit; line-height: 1.55;
+}
+textarea.nl-input:focus { outline: none; border-color: #0052cc; }
+.nl-actions { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
+.btn-nl-run {
+  background: #0052cc; color: #fff; border: none; border-radius: 6px;
+  padding: 7px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.btn-nl-run:hover { background: #0065ff; }
+.btn-nl-clear {
+  background: none; border: 1.5px solid #dfe1e6; border-radius: 6px;
+  padding: 6px 14px; font-size: 12px; color: #6b778c; cursor: pointer;
+}
+.btn-nl-clear:hover { border-color: #de350b; color: #de350b; }
+.nl-hint { font-size: 11px; color: #97a0af; font-style: italic; }
+.nl-result { margin-top: 14px; background: #e3f2fd; border-radius: 10px; padding: 16px 18px; }
+.nl-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.nl-chip { border-radius: 12px; padding: 3px 11px; font-size: 11px; font-weight: 600; background: #0052cc; color: #fff; }
+.nl-chip.cv { background: #6554c0; }
+.nl-chip.ct { background: #00875a; }
+.nl-chip.cs { background: #de350b; }
+.nl-tiles { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.nl-stat { background: #fff; border-radius: 8px; padding: 11px 15px; text-align: center; min-width: 95px; flex: 1; box-shadow: 0 1px 3px rgba(0,0,0,.07); }
+.nl-stat .num { font-size: 22px; font-weight: 700; color: #0052cc; }
+.nl-stat .lbl { font-size: 11px; color: #6b778c; margin-top: 3px; }
+.nl-tbl-wrap { overflow-x: auto; border-radius: 8px; }
+.nl-tbl { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; }
+.nl-tbl th { background: #f4f5f7; padding: 7px 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #dfe1e6; white-space: nowrap; }
+.nl-tbl td { padding: 6px 12px; border-bottom: 1px solid #f0f1f3; white-space: nowrap; }
+.nl-tbl tr:last-child td { border-bottom: none; }
+.nl-tbl .tr { text-align: right; font-variant-numeric: tabular-nums; }
+.nl-tbl .tot { font-weight: 700; background: #f4f5f7; }
+.nl-no-result { color: #6b778c; font-size: 13px; padding: 4px 0; font-style: italic; }
 
-/* ── Tile tabs ── */
+/* Tile tabs */
 .tile-tabs { display: flex; border-bottom: 2px solid #dfe1e6; margin-bottom: 14px; }
 .ttab {
   padding: 7px 18px; font-size: 13px; font-weight: 600; color: #6b778c;
@@ -117,7 +214,7 @@ select:disabled { opacity: .5; cursor: default; }
 .ttab:hover { color: #0052cc; }
 .ttab.active { color: #0052cc; border-bottom-color: #0052cc; }
 
-/* ── Stat tiles ── */
+/* Stat tiles */
 .tile-panel { display: none; }
 .tile-panel.active { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
 .stat {
@@ -136,7 +233,7 @@ select:disabled { opacity: .5; cursor: default; }
 .c-warn   .num { color: #974f0c; }
 .c-good   .num { color: #216e4e; }
 
-/* ── Chart cards ── */
+/* Chart cards */
 .chart-card {
   background: #fff; border-radius: 12px;
   box-shadow: 0 1px 6px rgba(0,0,0,.08); padding: 22px 24px; margin-bottom: 18px;
@@ -145,7 +242,7 @@ select:disabled { opacity: .5; cursor: default; }
 .ch-sub { font-size: 12px; color: #6b778c; margin-bottom: 16px; }
 canvas { max-height: 320px; }
 
-/* ── Comparison grid ── */
+/* Comparison grid */
 .cmp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 10px; width: 100%; }
 .cmp-card { background: #fff; border-radius: 8px; padding: 11px 14px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
 .cmp-fv   { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #6b778c; margin-bottom: 7px; }
@@ -156,7 +253,7 @@ canvas { max-height: 320px; }
 .d-down { background: #dcfff1; color: #164b35; }
 .d-flat { background: #f4f5f7; color: #6b778c; }
 
-/* ── Data table ── */
+/* Data table */
 .tbl-card { background: #fff; border-radius: 12px; box-shadow: 0 1px 6px rgba(0,0,0,.08); margin-bottom: 18px; overflow: hidden; }
 .tbl-toggle {
   padding: 12px 20px; font-size: 13px; font-weight: 600;
@@ -176,15 +273,10 @@ tr:hover td { background: #f8f9fc; }
 .tr  { text-align: right; font-variant-numeric: tabular-nums; }
 .tot { font-weight: 700; background: #f8f9fc !important; }
 
-/* ── Hidden until loaded ── */
 .content-area { display: none; }
 .content-area.on { display: block; }
-
-/* ── Two-ranges row ── */
 #rowRanges { display: none; }
 #rowRanges.on { display: flex; }
-
-/* ── Footer ── */
 .footer { text-align: center; color: #97a0af; font-size: 11px; margin-top: 4px; }
 </style>
 </head>
@@ -194,33 +286,49 @@ tr:hover td { background: #f8f9fc; }
 <div class="page-hdr">
   <div>
     <h1>Doc Team Analytics</h1>
-    <div class="meta-line" id="metaLine"><span class="spin"></span> Loading data from Jira…</div>
+    <div class="meta-line" id="metaLine">Upload a Jira export to get started</div>
   </div>
   <div class="gear-wrap">
-    <button class="gear-btn" id="gearBtn">⚙ Settings</button>
+    <button class="gear-btn" id="gearBtn">&#9881; Settings</button>
     <div class="gear-panel" id="gearPanel">
       <div class="gear-row">
-        <span class="gear-lbl">Filter ID</span>
-        <input type="text" id="filterId" value="41423" style="width:90px">
-        <span class="gear-lbl" style="margin-left:8px">SP Field</span>
-        <input type="text" id="spField" value="customfield_10016">
+        <span class="gear-lbl">SP Field</span>
+        <input type="text" id="spField" value="Story Points">
       </div>
       <div class="gear-row">
-        <button class="btn-reload" id="reloadBtn">Reload Data</button>
-        <span style="font-size:11px;color:#6b778c;margin-left:8px">Changes take effect on next reload</span>
+        <button class="btn-reload" id="newFileBtn">Upload New File</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Analysis Controls (always visible) -->
+<!-- Upload Zone -->
+<div id="uploadZone">
+  <div class="upload-box" id="uploadBox">
+    <div class="upload-ico">&#128202;</div>
+    <div class="upload-title">Drop your Jira export here</div>
+    <div class="upload-sub">Accepts .csv and .xlsx files exported from Jira</div>
+    <div class="upload-btn">Browse Files</div>
+    <input type="file" id="fileInput" accept=".csv,.xlsx,.xls">
+  </div>
+  <div class="upload-steps">
+    <div class="upload-step"><strong>1. Export from Jira</strong>Issues &rarr; Export &rarr; CSV</div>
+    <div class="upload-step"><strong>2. Upload here</strong>Drop the file or click Browse</div>
+    <div class="upload-step"><strong>3. Explore</strong>Charts and filters render instantly</div>
+  </div>
+</div>
+
+<!-- Controls -->
 <div class="ctrl-card">
   <div class="ctrl-row">
-    <span class="lbl">Fix Version</span>
-    <span style="font-size:12px;color:#6b778c">From</span>
-    <select id="fvFrom" disabled style="max-width:190px"><option>Loading…</option></select>
-    <span style="font-size:12px;color:#6b778c">To</span>
-    <select id="fvTo"   disabled style="max-width:190px"><option>Loading…</option></select>
+    <span class="lbl">Fix Versions</span>
+    <div class="ms-wrap" id="msWrapFV"></div>
+    <div class="vsep"></div>
+    <span class="lbl">Assignee</span>
+    <div class="ms-wrap" id="msWrapAssignee"></div>
+    <div class="vsep"></div>
+    <span class="lbl">Issue Type</span>
+    <div class="ms-wrap" id="msWrapType"></div>
     <div class="vsep"></div>
     <span class="lbl">Compare</span>
     <div class="tog" id="togCmp">
@@ -228,20 +336,17 @@ tr:hover td { background: #f8f9fc; }
       <button class="tog-btn" data-val="ranges" disabled>Two Ranges</button>
     </div>
   </div>
-
-  <!-- Two-range row (hidden by default) -->
   <div class="ctrl-row" id="rowRanges">
     <span class="lbl">Range A</span>
     <select id="aFrom" disabled style="max-width:175px"></select>
-    <span style="font-size:12px;color:#6b778c">–</span>
+    <span style="font-size:12px;color:#6b778c">&ndash;</span>
     <select id="aTo"   disabled style="max-width:175px"></select>
     <div class="vsep"></div>
     <span class="lbl">Range B</span>
     <select id="bFrom" disabled style="max-width:175px"></select>
-    <span style="font-size:12px;color:#6b778c">–</span>
+    <span style="font-size:12px;color:#6b778c">&ndash;</span>
     <select id="bTo"   disabled style="max-width:175px"></select>
   </div>
-
   <div class="ctrl-row">
     <span class="lbl">Metric</span>
     <div class="tog" id="togMetric">
@@ -270,86 +375,87 @@ tr:hover td { background: #f8f9fc; }
   </div>
 </div>
 
+<!-- NL Query -->
+<div class="nl-section" id="nlSection">
+  <div class="nl-header" id="nlHeader">
+    <span>&#128172; Ask a Question</span>
+    <span class="nl-caret" id="nlCaret">&#9660;</span>
+  </div>
+  <div class="nl-body" id="nlBody">
+    <textarea class="nl-input" id="nlInput" placeholder='Try: "Show me tickets resolved by Subhajit for 4.45.1.0, split by issue type"'></textarea>
+    <div class="nl-actions">
+      <button class="btn-nl-run" id="nlRunBtn">Analyse</button>
+      <button class="btn-nl-clear" id="nlClearBtn">Clear</button>
+      <span class="nl-hint">Understands names, version numbers, issue types</span>
+    </div>
+    <div id="nlResult" style="display:none"></div>
+  </div>
+</div>
+
 <!-- Status bar -->
 <div class="status" id="statusBar"></div>
 
-<!-- Loading skeleton (shown while fetching) -->
-<div id="skeletonWrap">
-  <div class="skel-tiles">
-    <div class="skel-tile"></div><div class="skel-tile"></div>
-    <div class="skel-tile"></div><div class="skel-tile"></div>
-    <div class="skel-tile"></div>
-  </div>
-  <div class="skel-chart"></div>
-  <div class="skel-chart" style="height:160px"></div>
-</div>
-
-<!-- ─── Content (shown after load) ─── -->
+<!-- Content -->
 <div class="content-area" id="contentArea">
-
-  <!-- Tile tabs -->
   <div class="tile-tabs">
     <div class="ttab active" data-panel="overview">Overview</div>
     <div class="ttab" data-panel="insights">Insights</div>
     <div class="ttab" data-panel="comparison" id="tabCmp" style="display:none">Comparison</div>
   </div>
 
-  <!-- Overview -->
   <div class="tile-panel active" id="panel-overview">
     <div class="stat c-blue">
-      <div class="num" id="t-total">—</div>
+      <div class="num" id="t-total">--</div>
       <div class="lbl">Total Tickets</div>
       <div class="sub" id="t-totalSub">in selected range</div>
     </div>
     <div class="stat c-green">
-      <div class="num" id="t-done">—</div>
+      <div class="num" id="t-done">--</div>
       <div class="lbl">Done / Resolved</div>
     </div>
     <div class="stat c-red">
-      <div class="num" id="t-open">—</div>
+      <div class="num" id="t-open">--</div>
       <div class="lbl">Still Open</div>
     </div>
     <div class="stat c-teal">
-      <div class="num" id="t-sp">—</div>
+      <div class="num" id="t-sp">--</div>
       <div class="lbl">Story Points Done</div>
     </div>
     <div class="stat c-purple">
-      <div class="num" id="t-fvs">—</div>
+      <div class="num" id="t-fvs">--</div>
       <div class="lbl">Fix Versions</div>
       <div class="sub" id="t-fvsSub"></div>
     </div>
   </div>
 
-  <!-- Insights -->
   <div class="tile-panel" id="panel-insights">
     <div class="stat c-warn">
-      <div class="num" id="i-completion">—</div>
+      <div class="num" id="i-completion">--</div>
       <div class="lbl">Completion Rate</div>
       <div class="sub">Done / Total</div>
     </div>
     <div class="stat c-teal">
-      <div class="num" id="i-avgDone">—</div>
+      <div class="num" id="i-avgDone">--</div>
       <div class="lbl">Avg Done / FV</div>
       <div class="sub">tickets per month</div>
     </div>
     <div class="stat c-orange">
-      <div class="num" id="i-avgOpen">—</div>
+      <div class="num" id="i-avgOpen">--</div>
       <div class="lbl">Avg Open / FV</div>
       <div class="sub">unresolved per month</div>
     </div>
     <div class="stat c-red">
-      <div class="num" id="i-peak">—</div>
+      <div class="num" id="i-peak">--</div>
       <div class="lbl">Peak Workload</div>
       <div class="sub" id="i-peakSub">most tickets in a FV</div>
     </div>
     <div class="stat c-good">
-      <div class="num" id="i-spRate">—</div>
+      <div class="num" id="i-spRate">--</div>
       <div class="lbl">SP Completion</div>
       <div class="sub">story points done %</div>
     </div>
   </div>
 
-  <!-- Comparison -->
   <div class="tile-panel" id="panel-comparison">
     <div id="cmpTileWrap" style="width:100%">
       <div style="padding:30px;text-align:center;color:#6b778c;font-size:13px">
@@ -358,122 +464,153 @@ tr:hover td { background: #f8f9fc; }
     </div>
   </div>
 
-  <!-- Activity chart -->
   <div class="chart-card" id="cardActivity">
-    <div class="ch-hdr" id="actHdr">Fix Version Activity — Ticket Count</div>
+    <div class="ch-hdr" id="actHdr">Fix Version Activity</div>
     <div class="ch-sub" id="actSub">Assigned vs Done vs Open per Fix Version</div>
     <canvas id="chartActivity"></canvas>
   </div>
 
-  <!-- Breakdown chart -->
   <div class="chart-card" id="cardBreak" style="display:none">
     <div class="ch-hdr" id="brkHdr">Breakdown</div>
     <div class="ch-sub" id="brkSub"></div>
     <canvas id="chartBreak"></canvas>
   </div>
 
-  <!-- Comparison chart -->
   <div class="chart-card" id="cardCmp" style="display:none">
     <div class="ch-hdr" id="cmpHdr">Range Comparison</div>
     <div class="ch-sub" id="cmpSub"></div>
     <canvas id="chartCmp"></canvas>
   </div>
 
-  <!-- Data table -->
   <div class="tbl-card" id="tblCard">
     <div class="tbl-toggle" id="tblToggle">
       <span>Data Table</span>
-      <span class="tbl-caret" id="tblCaret">▼</span>
+      <span class="tbl-caret" id="tblCaret">&#9660;</span>
     </div>
     <div class="tbl-wrap" id="tblWrap">
       <table id="dataTable"></table>
     </div>
   </div>
+</div>
 
-</div><!-- /content-area -->
-
-<div class="footer">mysnaplogic.atlassian.net &nbsp;|&nbsp; Doc Team Analytics &nbsp;|&nbsp; Generated with Claude Code</div>
+<div class="footer">mysnaplogic.atlassian.net &nbsp;|&nbsp; Doc Team Analytics</div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// CONFIG  ← paste your Cloudflare Worker URL here after deploying
-// ═══════════════════════════════════════════════════════════
-const JIRA_PROXY = 'https://jira-proxy.subhajit1975.workers.dev';
-// e.g. 'https://jira-proxy.yourname.workers.dev'
-// Your email + API token are stored as Worker Secrets in Cloudflare — not here
-// ────────────────────────────────────────────────────────────
-
-// ═══════════════════════════════════════════════════════════
-// CONSTANTS
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════════
 const COLORS = [
   '#0052cc','#00875a','#de350b','#6554c0','#ff8b00','#008da6',
   '#172b4d','#bf2600','#403294','#006644','#ff5630','#36b37e',
   '#00c7e6','#ffc400','#8777d9','#00b8d9'
 ];
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // STATE
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 const S = {
-  allIssues: [],
-  fixVersions: [],
-  filterId: '41423',
-  filterName: '',
-  spField: 'customfield_10016',
-  cmpMode: 'none',
-  metric: 'count',
-  breakdown: 'none',
-  chartType: 'bar',
+  allIssues: [], fixVersions: [],
+  filterName: '', spField: 'Story Points',
+  cmpMode: 'none', metric: 'count', breakdown: 'none', chartType: 'bar',
+  selectedFVs: [],
+  filterAssignees: [],
+  filterTypes: [],
 };
 const charts = { activity: null, breakdown: null, compare: null };
 let csvData = [];
 
-// ═══════════════════════════════════════════════════════════
-// JIRA API
-// ═══════════════════════════════════════════════════════════
-async function jiraGet(path, params = {}) {
-  const url = new URL(`${JIRA_PROXY}${path}`);
-  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, String(v)));
-  let r;
-  try {
-    r = await fetch(url.toString());
-  } catch (e) {
-    throw new Error('Network error — check that your Cloudflare Worker is deployed and running.');
-  }
-  if (!r.ok) {
-    let msg = `HTTP ${r.status}`;
-    try { const j = await r.json(); msg = j.errorMessages?.[0] || j.message || msg; } catch (_) {}
-    throw new Error(msg);
-  }
-  return r.json();
+// ═══════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function hexA(hex, a) {
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
 }
 
-async function fetchAll(jql, fields) {
-  const size = 100;
-  let start = 0, total = Infinity, issues = [];
-  while (start < total) {
-    statusInfo(`<span class="spin"></span>Loading… ${issues.length} issues`);
-    const d = await jiraGet('/search/jql', {
-      jql, maxResults: size, startAt: start,
-      fields: fields.join(','), validateQuery: 'warn'
+// ═══════════════════════════════════════════════════
+// MULTI-SELECT COMPONENT
+// ═══════════════════════════════════════════════════
+function makeMultiSelect(wrapperId, placeholder, onChange) {
+  const wrap = document.getElementById(wrapperId);
+  wrap.innerHTML = `
+    <button class="ms-trigger disabled" id="${wrapperId}-btn">${esc(placeholder)}</button>
+    <div class="ms-dropdown" id="${wrapperId}-dd">
+      <div class="ms-search-row"><input type="text" placeholder="Search..." id="${wrapperId}-srch" autocomplete="off"></div>
+      <div class="ms-actions">
+        <button class="ms-act" id="${wrapperId}-all">All</button>
+        <button class="ms-act" id="${wrapperId}-none">None</button>
+      </div>
+      <div id="${wrapperId}-list"></div>
+    </div>`;
+
+  let options = [];
+  let selected = new Set();
+
+  const btn   = document.getElementById(`${wrapperId}-btn`);
+  const dd    = document.getElementById(`${wrapperId}-dd`);
+  const srch  = document.getElementById(`${wrapperId}-srch`);
+  const list  = document.getElementById(`${wrapperId}-list`);
+
+  function label() {
+    if (!selected.size || selected.size === options.length) {
+      btn.textContent = placeholder; btn.classList.remove('active');
+    } else {
+      btn.textContent = `${selected.size} selected`; btn.classList.add('active');
+    }
+  }
+
+  function drawList(filter) {
+    const f = (filter||'').toLowerCase();
+    const vis = f ? options.filter(o => o.toLowerCase().includes(f)) : options;
+    if (!vis.length) { list.innerHTML = `<div class="ms-empty">No matches</div>`; return; }
+    list.innerHTML = vis.map(o =>
+      `<label class="ms-item"><input type="checkbox" value="${esc(o)}" ${selected.has(o)?'checked':''}> ${esc(o)}</label>`
+    ).join('');
+    list.querySelectorAll('input').forEach(cb => {
+      cb.addEventListener('change', function() {
+        if (this.checked) selected.add(this.value); else selected.delete(this.value);
+        label(); onChange(getVal());
+      });
     });
-    total = d.total;
-    issues.push(...d.issues);
-    start += d.issues.length;
-    if (!d.issues.length) break;
-    if (issues.length >= 2000) break;
   }
-  return { issues, total };
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (btn.classList.contains('disabled')) return;
+    dd.classList.toggle('open');
+    if (dd.classList.contains('open')) { srch.value=''; drawList(''); srch.focus(); }
+  });
+  srch.addEventListener('input', () => drawList(srch.value));
+  document.getElementById(`${wrapperId}-all`).addEventListener('click', () => {
+    selected = new Set(options); drawList(srch.value); label(); onChange(getVal());
+  });
+  document.getElementById(`${wrapperId}-none`).addEventListener('click', () => {
+    selected = new Set(); drawList(srch.value); label(); onChange(getVal());
+  });
+  document.addEventListener('click', e => { if (!wrap.contains(e.target)) dd.classList.remove('open'); });
+
+  function getVal() {
+    return (!selected.size || selected.size === options.length) ? [] : [...selected];
+  }
+  return {
+    setOptions(items) { options = items; selected = new Set(); drawList(''); label(); },
+    getVal,
+    enable()  { btn.classList.remove('disabled'); },
+    disable() { btn.classList.add('disabled'); dd.classList.remove('open'); },
+  };
 }
 
-// ═══════════════════════════════════════════════════════════
+let msFV, msAssignee, msType;
+
+// ═══════════════════════════════════════════════════
 // STATUS
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 function setStatus(type, html) {
   const el = document.getElementById('statusBar');
-  el.className = 'status ' + type;
-  el.innerHTML = html;
+  el.className = 'status ' + type; el.innerHTML = html;
 }
 const statusInfo  = h => setStatus('info',  h);
 const statusOk    = h => setStatus('ok',    h);
@@ -481,35 +618,33 @@ const statusWarn  = h => setStatus('warn',  h);
 const statusError = h => setStatus('error', h);
 const clearStatus = () => { document.getElementById('statusBar').className = 'status'; };
 
-// ═══════════════════════════════════════════════════════════
-// ENABLE / DISABLE CONTROLS
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// ENABLE / DISABLE
+// ═══════════════════════════════════════════════════
 function setControlsEnabled(on) {
-  ['fvFrom','fvTo','aFrom','aTo','bFrom','bTo','selBreak'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.disabled = !on;
+  ['aFrom','aTo','bFrom','bTo','selBreak'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.disabled = !on;
   });
   document.querySelectorAll('.tog-btn').forEach(b => {
     if (on) b.removeAttribute('disabled'); else b.setAttribute('disabled','');
   });
   document.getElementById('csvBtn').disabled = !on;
+  if (msFV)       { on ? msFV.enable()      : msFV.disable(); }
+  if (msAssignee) { on ? msAssignee.enable() : msAssignee.disable(); }
+  if (msType)     { on ? msType.enable()     : msType.disable(); }
 }
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // FIX VERSION HELPERS
-// ═══════════════════════════════════════════════════════════
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
+// ═══════════════════════════════════════════════════
 function extractFVs(issues) {
   const map = new Map();
   issues.forEach(issue => {
-    (issue.fields.fixVersions || []).forEach(fv => {
-      if (!map.has(fv.name)) map.set(fv.name, { name: fv.name, releaseDate: fv.releaseDate || null });
+    (issue.fields.fixVersions||[]).forEach(fv => {
+      if (!map.has(fv.name)) map.set(fv.name, { name:fv.name, releaseDate:fv.releaseDate||null });
     });
   });
-  return Array.from(map.values()).sort((a, b) => {
+  return Array.from(map.values()).sort((a,b) => {
     if (a.releaseDate && b.releaseDate) return a.releaseDate.localeCompare(b.releaseDate);
     return a.name.localeCompare(b.name);
   });
@@ -519,504 +654,666 @@ function fvOpts(fvs) {
   return fvs.map(fv => `<option value="${esc(fv.name)}">${esc(fv.name)}</option>`).join('');
 }
 
-function populateFVSelects(fvs) {
+function populateRangeSelects(fvs) {
   const opts = fvOpts(fvs);
-  ['fvFrom','fvTo','aFrom','aTo','bFrom','bTo'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = opts;
+  ['aFrom','aTo','bFrom','bTo'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.innerHTML = opts;
   });
-  const first = fvs[0]?.name, last = fvs[fvs.length - 1]?.name;
-  const mid   = fvs[Math.floor(fvs.length / 2)]?.name;
-  if (first) { document.getElementById('fvFrom').value = first; document.getElementById('aFrom').value = first; }
-  if (last)  { document.getElementById('fvTo').value   = last;  document.getElementById('bTo').value   = last; }
-  if (mid)   { document.getElementById('aTo').value = mid; document.getElementById('bFrom').value = mid; }
-  else if (last) { document.getElementById('aTo').value = last; document.getElementById('bFrom').value = last; }
+  const first=fvs[0]?.name, last=fvs[fvs.length-1]?.name, mid=fvs[Math.floor(fvs.length/2)]?.name;
+  if (first) document.getElementById('aFrom').value = first;
+  if (mid)   { document.getElementById('aTo').value=mid; document.getElementById('bFrom').value=mid; }
+  else if (last) { document.getElementById('aTo').value=last; document.getElementById('bFrom').value=last; }
+  if (last)  document.getElementById('bTo').value = last;
+}
+
+function populateMultiSelects(issues) {
+  const fvNames  = S.fixVersions.map(fv => fv.name);
+  const assignees = [...new Set(issues.map(i => i.fields.assignee?.displayName||'Unassigned'))].sort();
+  const types     = [...new Set(issues.map(i => i.fields.issuetype?.name).filter(Boolean))].sort();
+  msFV.setOptions(fvNames);
+  msAssignee.setOptions(assignees);
+  msType.setOptions(types);
 }
 
 function getFVsInRange(fromName, toName) {
-  const fvs = S.fixVersions;
-  const fi = fvs.findIndex(f => f.name === fromName);
-  const ti = fvs.findIndex(f => f.name === toName);
-  if (fi < 0 || ti < 0) return fvs;
-  return fvs.slice(fi, Math.max(fi, ti) + 1);
+  const fvs=S.fixVersions;
+  const fi=fvs.findIndex(f=>f.name===fromName), ti=fvs.findIndex(f=>f.name===toName);
+  if (fi<0||ti<0) return fvs;
+  return fvs.slice(fi, Math.max(fi,ti)+1);
 }
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // AGGREGATION
-// ═══════════════════════════════════════════════════════════
-function isDone(issue) {
-  return issue.fields.resolution !== null && issue.fields.resolution !== undefined;
-}
-
-function spVal(issue) { return Number(issue.fields[S.spField]) || 0; }
+// ═══════════════════════════════════════════════════
+function isDone(issue) { return issue.fields.resolution !== null && issue.fields.resolution !== undefined; }
+function spVal(issue)  { return Number(issue.fields[S.spField])||0; }
 
 function dimVal(issue, dim) {
-  const f = issue.fields;
-  switch (dim) {
-    case 'assignee':   return f.assignee?.displayName   || 'Unassigned';
-    case 'issuetype':  return f.issuetype?.name         || 'Unknown';
-    case 'priority':   return f.priority?.name          || 'Unknown';
-    case 'project':    return f.project?.name           || 'Unknown';
-    case 'status':     return f.status?.name            || 'Unknown';
-    case 'fixversion': return f.fixVersions?.[0]?.name || 'No Fix Version';
+  const f=issue.fields;
+  switch(dim) {
+    case 'assignee':   return f.assignee?.displayName||'Unassigned';
+    case 'issuetype':  return f.issuetype?.name||'Unknown';
+    case 'priority':   return f.priority?.name||'Unknown';
+    case 'project':    return f.project?.name||'Unknown';
+    case 'status':     return f.status?.name||'Unknown';
+    case 'fixversion': return f.fixVersions?.[0]?.name||'No Fix Version';
     default: return 'All';
   }
 }
 
+function applyMainFilters(issues) {
+  let out = issues;
+  if (S.selectedFVs.length) {
+    const s=new Set(S.selectedFVs);
+    out=out.filter(i=>(i.fields.fixVersions||[]).some(fv=>s.has(fv.name)));
+  }
+  if (S.filterAssignees.length) {
+    const s=new Set(S.filterAssignees);
+    out=out.filter(i=>s.has(i.fields.assignee?.displayName||'Unassigned'));
+  }
+  if (S.filterTypes.length) {
+    const s=new Set(S.filterTypes);
+    out=out.filter(i=>s.has(i.fields.issuetype?.name));
+  }
+  return out;
+}
+
 function filterByFVRange(issues, fromName, toName) {
-  const fvs     = S.fixVersions;
-  const fi      = fvs.findIndex(f => f.name === fromName);
-  const ti      = fvs.findIndex(f => f.name === toName);
-  const validSet = new Set(fvs.slice(fi, Math.max(fi,ti) + 1).map(f => f.name));
-  return issues.filter(i => (i.fields.fixVersions || []).some(fv => validSet.has(fv.name)));
+  const fvs=S.fixVersions;
+  const fi=fvs.findIndex(f=>f.name===fromName), ti=fvs.findIndex(f=>f.name===toName);
+  const validSet=new Set(fvs.slice(fi,Math.max(fi,ti)+1).map(f=>f.name));
+  return issues.filter(i=>(i.fields.fixVersions||[]).some(fv=>validSet.has(fv.name)));
 }
 
 function aggregate(issues, fvList) {
-  const bucket = {}, validSet = new Set(fvList.map(f => f.name));
-  fvList.forEach(fv => { bucket[fv.name] = { total:0, done:0, open:0, sp:0, spDone:0 }; });
-  issues.forEach(issue => {
-    const pts = spVal(issue), done = isDone(issue);
-    (issue.fields.fixVersions || []).forEach(fv => {
+  const bucket={}, validSet=new Set(fvList.map(f=>f.name));
+  fvList.forEach(fv=>{ bucket[fv.name]={total:0,done:0,open:0,sp:0,spDone:0}; });
+  issues.forEach(issue=>{
+    const pts=spVal(issue), done=isDone(issue);
+    (issue.fields.fixVersions||[]).forEach(fv=>{
       if (!validSet.has(fv.name)) return;
-      bucket[fv.name].total++;
-      bucket[fv.name].sp += pts;
-      if (done) { bucket[fv.name].done++; bucket[fv.name].spDone += pts; }
-      else        bucket[fv.name].open++;
+      bucket[fv.name].total++; bucket[fv.name].sp+=pts;
+      if (done){bucket[fv.name].done++;bucket[fv.name].spDone+=pts;}
+      else bucket[fv.name].open++;
     });
   });
   return bucket;
 }
 
 function aggregateDim(issues, fvList, dim) {
-  const result = {}, validSet = new Set(fvList.map(f => f.name));
-  issues.forEach(issue => {
-    const dv = dimVal(issue, dim), pts = spVal(issue), done = isDone(issue);
-    if (!result[dv]) {
-      result[dv] = {};
-      fvList.forEach(fv => { result[dv][fv.name] = { total:0, done:0, sp:0, spDone:0 }; });
-    }
-    (issue.fields.fixVersions || []).forEach(fv => {
+  const result={}, validSet=new Set(fvList.map(f=>f.name));
+  issues.forEach(issue=>{
+    const dv=dimVal(issue,dim), pts=spVal(issue), done=isDone(issue);
+    if (!result[dv]) { result[dv]={}; fvList.forEach(fv=>{result[dv][fv.name]={total:0,done:0,sp:0,spDone:0};}); }
+    (issue.fields.fixVersions||[]).forEach(fv=>{
       if (!validSet.has(fv.name)) return;
-      if (!result[dv][fv.name]) result[dv][fv.name] = { total:0, done:0, sp:0, spDone:0 };
-      result[dv][fv.name].total++;
-      result[dv][fv.name].sp += pts;
-      if (done) { result[dv][fv.name].done++; result[dv][fv.name].spDone += pts; }
+      if (!result[dv][fv.name]) result[dv][fv.name]={total:0,done:0,sp:0,spDone:0};
+      result[dv][fv.name].total++; result[dv][fv.name].sp+=pts;
+      if (done){result[dv][fv.name].done++;result[dv][fv.name].spDone+=pts;}
     });
   });
   return result;
 }
 
-function mKey()    { return S.metric === 'sp' ? 'sp'     : 'total'; }
-function mKeyDone(){ return S.metric === 'sp' ? 'spDone' : 'done';  }
+function mKey()     { return S.metric==='sp'?'sp':'total'; }
+function mKeyDone() { return S.metric==='sp'?'spDone':'done'; }
 
-// ═══════════════════════════════════════════════════════════
-// COLOUR HELPER
-// ═══════════════════════════════════════════════════════════
-function hexA(hex, a) {
-  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  return `rgba(${r},${g},${b},${a})`;
-}
-
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // TILES
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 function updateTiles(bucket, fvList) {
-  const tot = fvList.reduce((s,fv) => {
-    const b = bucket[fv.name];
-    return { total:s.total+b.total, done:s.done+b.done, open:s.open+b.open, sp:s.sp+b.sp, spDone:s.spDone+b.spDone };
-  }, { total:0, done:0, open:0, sp:0, spDone:0 });
-  const n    = fvList.length || 1;
-  const comp = tot.total > 0 ? Math.round((tot.done/tot.total)*100) : 0;
-
-  document.getElementById('t-total').textContent    = tot.total;
-  document.getElementById('t-totalSub').textContent = `across ${n} Fix Version${n!==1?'s':''}`;
-  document.getElementById('t-done').textContent     = tot.done;
-  document.getElementById('t-open').textContent     = tot.open;
-  document.getElementById('t-sp').textContent       = tot.spDone || '—';
-  document.getElementById('t-fvs').textContent      = n;
-  document.getElementById('t-fvsSub').textContent   = n>1 ? `${fvList[0].name} – ${fvList[n-1].name}` : fvList[0]?.name||'';
-
-  const compEl = document.getElementById('i-completion');
-  compEl.textContent = comp + '%';
-  compEl.closest('.stat').className = 'stat ' + (comp>=80?'c-good':comp>=50?'c-warn':'c-red');
-
-  document.getElementById('i-avgDone').textContent = (tot.done/n).toFixed(1);
-  document.getElementById('i-avgOpen').textContent = (tot.open/n).toFixed(1);
-
-  let peak=0, peakFV='';
-  fvList.forEach(fv => { if (bucket[fv.name].total>peak) { peak=bucket[fv.name].total; peakFV=fv.name; } });
-  document.getElementById('i-peak').textContent    = peak;
-  document.getElementById('i-peakSub').textContent = peakFV;
-
-  document.getElementById('i-spRate').textContent = tot.sp>0 ? Math.round((tot.spDone/tot.sp)*100)+'%' : '—';
+  const tot=fvList.reduce((s,fv)=>{
+    const b=bucket[fv.name];
+    return {total:s.total+b.total,done:s.done+b.done,open:s.open+b.open,sp:s.sp+b.sp,spDone:s.spDone+b.spDone};
+  },{total:0,done:0,open:0,sp:0,spDone:0});
+  const n=fvList.length||1;
+  const comp=tot.total>0?Math.round((tot.done/tot.total)*100):0;
+  document.getElementById('t-total').textContent=tot.total;
+  document.getElementById('t-totalSub').textContent=`across ${n} Fix Version${n!==1?'s':''}`;
+  document.getElementById('t-done').textContent=tot.done;
+  document.getElementById('t-open').textContent=tot.open;
+  document.getElementById('t-sp').textContent=tot.spDone||'--';
+  document.getElementById('t-fvs').textContent=n;
+  document.getElementById('t-fvsSub').textContent=n>1?`${fvList[0].name} - ${fvList[n-1].name}`:fvList[0]?.name||'';
+  const compEl=document.getElementById('i-completion');
+  compEl.textContent=comp+'%';
+  compEl.closest('.stat').className='stat '+(comp>=80?'c-good':comp>=50?'c-warn':'c-red');
+  document.getElementById('i-avgDone').textContent=(tot.done/n).toFixed(1);
+  document.getElementById('i-avgOpen').textContent=(tot.open/n).toFixed(1);
+  let peak=0,peakFV='';
+  fvList.forEach(fv=>{if(bucket[fv.name].total>peak){peak=bucket[fv.name].total;peakFV=fv.name;}});
+  document.getElementById('i-peak').textContent=peak;
+  document.getElementById('i-peakSub').textContent=peakFV;
+  document.getElementById('i-spRate').textContent=tot.sp>0?Math.round((tot.spDone/tot.sp)*100)+'%':'--';
 }
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // CHARTS
-// ═══════════════════════════════════════════════════════════
-const GRID = '#f0f1f3';
+// ═══════════════════════════════════════════════════
+const GRID='#f0f1f3';
 
 function renderActivity(bucket, fvList) {
-  const labels = fvList.map(fv => fv.name);
-  const type   = S.chartType;
-  const mk = mKey(), mkd = mKeyDone();
-  const total  = fvList.map(fv => bucket[fv.name][mk]  || 0);
-  const done   = fvList.map(fv => bucket[fv.name][mkd] || 0);
-  const open   = fvList.map(fv => (bucket[fv.name][mk]||0) - (bucket[fv.name][mkd]||0));
-
+  const labels=fvList.map(fv=>fv.name), type=S.chartType;
+  const mk=mKey(), mkd=mKeyDone();
+  const total=fvList.map(fv=>bucket[fv.name][mk]||0);
+  const done =fvList.map(fv=>bucket[fv.name][mkd]||0);
+  const open =fvList.map(fv=>(bucket[fv.name][mk]||0)-(bucket[fv.name][mkd]||0));
   if (charts.activity) charts.activity.destroy();
-  charts.activity = new Chart(document.getElementById('chartActivity'), {
+  charts.activity=new Chart(document.getElementById('chartActivity'),{
     type,
-    data: {
-      labels,
-      datasets: [
-        { label:'Assigned (Total)', data:total,
-          backgroundColor:type==='bar'?hexA('#0052cc',.7):'transparent', borderColor:'#0052cc',
-          borderWidth:type==='bar'?1:2.5, borderRadius:type==='bar'?4:0,
-          fill:false, tension:.3, pointRadius:type==='line'?4:0, pointBackgroundColor:'#0052cc' },
-        { label:'Done', data:done,
-          backgroundColor:type==='bar'?hexA('#00875a',.7):'transparent', borderColor:'#00875a',
-          borderWidth:type==='bar'?1:2.5, borderRadius:type==='bar'?4:0,
-          fill:false, tension:.3, pointRadius:type==='line'?4:0, pointBackgroundColor:'#00875a' },
-        { label:'Open', data:open,
-          backgroundColor:type==='bar'?hexA('#de350b',.5):'transparent', borderColor:'#de350b',
-          borderWidth:type==='bar'?1:2, borderRadius:type==='bar'?4:0,
-          borderDash:type==='line'?[5,4]:[], fill:false, tension:.3,
-          pointRadius:type==='line'?3:0, pointBackgroundColor:'#de350b' },
-      ]
-    },
-    options: {
-      responsive:true, interaction:{mode:'index',intersect:false},
-      plugins:{ legend:{position:'top'}, tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}`}} },
-      scales:{
-        x:{grid:{color:GRID},ticks:{maxRotation:45}},
-        y:{grid:{color:GRID},beginAtZero:true,ticks:{precision:0}}
-      }
+    data:{labels,datasets:[
+      {label:'Assigned (Total)',data:total,backgroundColor:type==='bar'?hexA('#0052cc',.7):'transparent',borderColor:'#0052cc',borderWidth:type==='bar'?1:2.5,borderRadius:type==='bar'?4:0,fill:false,tension:.3,pointRadius:type==='line'?4:0,pointBackgroundColor:'#0052cc'},
+      {label:'Done',data:done,backgroundColor:type==='bar'?hexA('#00875a',.7):'transparent',borderColor:'#00875a',borderWidth:type==='bar'?1:2.5,borderRadius:type==='bar'?4:0,fill:false,tension:.3,pointRadius:type==='line'?4:0,pointBackgroundColor:'#00875a'},
+      {label:'Open',data:open,backgroundColor:type==='bar'?hexA('#de350b',.5):'transparent',borderColor:'#de350b',borderWidth:type==='bar'?1:2,borderRadius:type==='bar'?4:0,borderDash:type==='line'?[5,4]:[],fill:false,tension:.3,pointRadius:type==='line'?3:0,pointBackgroundColor:'#de350b'},
+    ]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top'},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y}`}}},
+      scales:{x:{grid:{color:GRID},ticks:{maxRotation:45}},y:{grid:{color:GRID},beginAtZero:true,ticks:{precision:0}}}
     }
   });
-
-  const mLabel = S.metric==='sp'?'Story Points':'Ticket Count';
-  document.getElementById('actHdr').textContent = `Fix Version Activity — ${mLabel}`;
+  document.getElementById('actHdr').textContent=`Fix Version Activity - ${S.metric==='sp'?'Story Points':'Ticket Count'}`;
 }
 
 function renderBreakdown(dimData, fvList) {
-  const labels = fvList.map(fv => fv.name);
-  const mk     = mKey();
-  const dimKeys = Object.keys(dimData)
-    .sort((a,b) => {
-      const at = fvList.reduce((s,fv)=>s+(dimData[a][fv.name]?.[mk]||0),0);
-      const bt = fvList.reduce((s,fv)=>s+(dimData[b][fv.name]?.[mk]||0),0);
-      return bt-at;
-    }).slice(0, 14);
-
-  const datasets = dimKeys.map((dk, i) => ({
-    label: dk,
-    data: fvList.map(fv => dimData[dk]?.[fv.name]?.[mk] || 0),
-    backgroundColor: hexA(COLORS[i%COLORS.length], S.chartType==='bar'?.8:1),
-    borderColor: COLORS[i%COLORS.length], borderWidth:1.5,
-    borderRadius: S.chartType==='bar'?3:0, fill:false, tension:.3,
-    pointRadius: S.chartType==='line'?3:0, pointBackgroundColor: COLORS[i%COLORS.length],
+  const labels=fvList.map(fv=>fv.name), mk=mKey();
+  const dimKeys=Object.keys(dimData).sort((a,b)=>{
+    const at=fvList.reduce((s,fv)=>s+(dimData[a][fv.name]?.[mk]||0),0);
+    const bt=fvList.reduce((s,fv)=>s+(dimData[b][fv.name]?.[mk]||0),0);
+    return bt-at;
+  }).slice(0,14);
+  const datasets=dimKeys.map((dk,i)=>({
+    label:dk,data:fvList.map(fv=>dimData[dk]?.[fv.name]?.[mk]||0),
+    backgroundColor:hexA(COLORS[i%COLORS.length],S.chartType==='bar'?.8:1),
+    borderColor:COLORS[i%COLORS.length],borderWidth:1.5,
+    borderRadius:S.chartType==='bar'?3:0,fill:false,tension:.3,
+    pointRadius:S.chartType==='line'?3:0,pointBackgroundColor:COLORS[i%COLORS.length],
   }));
-
   if (charts.breakdown) charts.breakdown.destroy();
-  charts.breakdown = new Chart(document.getElementById('chartBreak'), {
-    type: S.chartType,
-    data: { labels, datasets },
-    options: {
-      responsive:true, interaction:{mode:'index',intersect:false},
-      plugins:{ legend:{position:'right', labels:{boxWidth:12, font:{size:11}}} },
-      scales:{
-        x:{grid:{color:GRID}, ticks:{maxRotation:45}, stacked:S.chartType==='bar'},
-        y:{grid:{color:GRID}, beginAtZero:true, ticks:{precision:0}, stacked:S.chartType==='bar'}
-      }
+  charts.breakdown=new Chart(document.getElementById('chartBreak'),{
+    type:S.chartType,data:{labels,datasets},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'right',labels:{boxWidth:12,font:{size:11}}}},
+      scales:{x:{grid:{color:GRID},ticks:{maxRotation:45},stacked:S.chartType==='bar'},
+              y:{grid:{color:GRID},beginAtZero:true,ticks:{precision:0},stacked:S.chartType==='bar'}}
     }
   });
-
-  const dimLabel = document.getElementById('selBreak').selectedOptions[0].text;
-  document.getElementById('brkHdr').textContent = `Breakdown by ${dimLabel}`;
-  document.getElementById('brkSub').textContent =
-    `Top ${dimKeys.length} values · ${S.metric==='sp'?'story points':'ticket count'} per Fix Version`;
-  document.getElementById('cardBreak').style.display = 'block';
+  document.getElementById('brkHdr').textContent=`Breakdown by ${document.getElementById('selBreak').selectedOptions[0].text}`;
+  document.getElementById('brkSub').textContent=`Top ${dimKeys.length} values - ${S.metric==='sp'?'story points':'ticket count'} per Fix Version`;
+  document.getElementById('cardBreak').style.display='block';
 }
 
-function renderCompare(bucketA, fvA, bucketB, fvB, lblA, lblB) {
-  const len = Math.max(fvA.length, fvB.length);
-  const labels = Array.from({length:len}, (_,i) => {
+function renderCompare(bucketA,fvA,bucketB,fvB,lblA,lblB) {
+  const len=Math.max(fvA.length,fvB.length);
+  const labels=Array.from({length:len},(_,i)=>{
     const a=fvA[i]?.name||'', b=fvB[i]?.name||'';
-    return a===b ? a : `${a||'—'} / ${b||'—'}`;
+    return a===b?a:`${a||'--'} / ${b||'--'}`;
   });
   const mk=mKey(), mkd=mKeyDone();
-
-  const pad = (arr, n) => { while(arr.length<n) arr.push(null); return arr; };
-  const dataA     = pad(fvA.map(fv => bucketA[fv.name]?.[mk]  || 0), len);
-  const dataADone = pad(fvA.map(fv => bucketA[fv.name]?.[mkd] || 0), len);
-  const dataB     = pad(fvB.map(fv => bucketB[fv.name]?.[mk]  || 0), len);
-  const dataBDone = pad(fvB.map(fv => bucketB[fv.name]?.[mkd] || 0), len);
-
+  const pad=(arr,n)=>{while(arr.length<n)arr.push(null);return arr;};
+  const dataA    =pad(fvA.map(fv=>bucketA[fv.name]?.[mk] ||0),len);
+  const dataADone=pad(fvA.map(fv=>bucketA[fv.name]?.[mkd]||0),len);
+  const dataB    =pad(fvB.map(fv=>bucketB[fv.name]?.[mk] ||0),len);
+  const dataBDone=pad(fvB.map(fv=>bucketB[fv.name]?.[mkd]||0),len);
   if (charts.compare) charts.compare.destroy();
-  charts.compare = new Chart(document.getElementById('chartCmp'), {
-    type: S.chartType,
-    data: {
-      labels,
-      datasets: [
-        { label:`${lblA} (Total)`, data:dataA, backgroundColor:hexA('#6554c0',.65), borderColor:'#6554c0',
-          borderWidth:2, borderRadius:4, fill:false, tension:.3, spanGaps:true, pointRadius:S.chartType==='line'?4:0 },
-        { label:`${lblB} (Total)`, data:dataB, backgroundColor:hexA('#0052cc',.65), borderColor:'#0052cc',
-          borderWidth:2, borderRadius:4, fill:false, tension:.3, spanGaps:true, pointRadius:S.chartType==='line'?4:0 },
-        { label:`${lblA} (Done)`,  data:dataADone, backgroundColor:hexA('#00875a',.4), borderColor:'#00875a',
-          borderWidth:2, borderDash:[5,4], borderRadius:3, fill:false, tension:.3, spanGaps:true, pointRadius:S.chartType==='line'?3:0 },
-        { label:`${lblB} (Done)`,  data:dataBDone, backgroundColor:hexA('#de350b',.4), borderColor:'#de350b',
-          borderWidth:2, borderDash:[5,4], borderRadius:3, fill:false, tension:.3, spanGaps:true, pointRadius:S.chartType==='line'?3:0 },
-      ]
-    },
-    options: {
-      responsive:true, interaction:{mode:'index',intersect:false},
-      plugins:{ legend:{position:'top'} },
-      scales:{
-        x:{grid:{color:GRID}, ticks:{maxRotation:45}},
-        y:{grid:{color:GRID}, beginAtZero:true, ticks:{precision:0}}
-      }
+  charts.compare=new Chart(document.getElementById('chartCmp'),{
+    type:S.chartType,
+    data:{labels,datasets:[
+      {label:`${lblA} (Total)`,data:dataA,backgroundColor:hexA('#6554c0',.65),borderColor:'#6554c0',borderWidth:2,borderRadius:4,fill:false,tension:.3,spanGaps:true,pointRadius:S.chartType==='line'?4:0},
+      {label:`${lblB} (Total)`,data:dataB,backgroundColor:hexA('#0052cc',.65),borderColor:'#0052cc',borderWidth:2,borderRadius:4,fill:false,tension:.3,spanGaps:true,pointRadius:S.chartType==='line'?4:0},
+      {label:`${lblA} (Done)`,data:dataADone,backgroundColor:hexA('#00875a',.4),borderColor:'#00875a',borderWidth:2,borderDash:[5,4],borderRadius:3,fill:false,tension:.3,spanGaps:true,pointRadius:S.chartType==='line'?3:0},
+      {label:`${lblB} (Done)`,data:dataBDone,backgroundColor:hexA('#de350b',.4),borderColor:'#de350b',borderWidth:2,borderDash:[5,4],borderRadius:3,fill:false,tension:.3,spanGaps:true,pointRadius:S.chartType==='line'?3:0},
+    ]},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top'}},
+      scales:{x:{grid:{color:GRID},ticks:{maxRotation:45}},y:{grid:{color:GRID},beginAtZero:true,ticks:{precision:0}}}
     }
   });
-
-  document.getElementById('cmpHdr').textContent = `${lblA}  vs  ${lblB}`;
-  document.getElementById('cmpSub').textContent = 'Total assigned vs Done — solid bars = total, dashed = done';
-  document.getElementById('cardCmp').style.display = 'block';
-  document.getElementById('tabCmp').style.display  = 'block';
-
-  // Comparison delta cards
-  const cards = fvA.map((fva, i) => {
-    const fvb  = fvB[i];
-    const vA   = bucketA[fva.name]?.[mk] || 0;
-    const vB   = fvb ? (bucketB[fvb.name]?.[mk] || 0) : null;
-    const d    = vB !== null ? vB - vA : null;
-    const sign = d > 0 ? '+' : '';
-    const pct  = vA>0 && d!==null ? `(${sign}${Math.round((d/vA)*100)}%)` : '';
-    const cls  = d===null?'d-flat': d>0?'d-up': d<0?'d-down':'d-flat';
-    return `<div class="cmp-card">
-      <div class="cmp-fv">${esc(fva.name)}</div>
+  document.getElementById('cmpHdr').textContent=`${lblA}  vs  ${lblB}`;
+  document.getElementById('cmpSub').textContent='Total assigned vs Done - solid = total, dashed = done';
+  document.getElementById('cardCmp').style.display='block';
+  document.getElementById('tabCmp').style.display='block';
+  const cards=fvA.map((fva,i)=>{
+    const fvb=fvB[i], vA=bucketA[fva.name]?.[mk]||0, vB=fvb?(bucketB[fvb.name]?.[mk]||0):null;
+    const d=vB!==null?vB-vA:null, sign=d>0?'+':'';
+    const pct=vA>0&&d!==null?`(${sign}${Math.round((d/vA)*100)}%)`:'';
+    const cls=d===null?'d-flat':d>0?'d-up':d<0?'d-down':'d-flat';
+    return `<div class="cmp-card"><div class="cmp-fv">${esc(fva.name)}</div>
       <div class="cmp-row"><span>${esc(lblA)}</span><span class="yr">${vA}</span></div>
       ${vB!==null?`<div class="cmp-row"><span>${esc(lblB)}</span><span class="yr">${vB}</span></div>`:''}
-      ${d!==null?`<span class="delta ${cls}">${sign}${d} ${pct}</span>`:''}
-    </div>`;
+      ${d!==null?`<span class="delta ${cls}">${sign}${d} ${pct}</span>`:''}</div>`;
   }).join('');
-  document.getElementById('cmpTileWrap').innerHTML = `<div class="cmp-grid">${cards}</div>`;
+  document.getElementById('cmpTileWrap').innerHTML=`<div class="cmp-grid">${cards}</div>`;
 }
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // DATA TABLE
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 function buildTable(bucket, fvList, dimData) {
-  const fvCols = fvList.map(fv => `<th class="tr">${esc(fv.name)}</th>`).join('');
-  const hasDim = S.breakdown !== 'none';
-  const mk = mKey(), mkd = mKeyDone();
-  let rows = '';
-
+  const fvCols=fvList.map(fv=>`<th class="tr">${esc(fv.name)}</th>`).join('');
+  const hasDim=S.breakdown!=='none', mk=mKey();
+  let rows='';
   if (hasDim) {
-    const dimKeys = Object.keys(dimData).sort((a,b)=>{
+    const dimKeys=Object.keys(dimData).sort((a,b)=>{
       const at=fvList.reduce((s,fv)=>s+(dimData[a][fv.name]?.[mk]||0),0);
       const bt=fvList.reduce((s,fv)=>s+(dimData[b][fv.name]?.[mk]||0),0);
       return bt-at;
     });
-    csvData = [['Dimension', ...fvList.map(fv=>fv.name), 'Total']];
-    dimKeys.forEach(dk => {
-      const vals  = fvList.map(fv => dimData[dk]?.[fv.name]?.[mk]||0);
-      const total = vals.reduce((a,b)=>a+b,0);
-      rows += `<tr><td><strong>${esc(dk)}</strong></td>${vals.map(v=>`<td class="tr">${v}</td>`).join('')}<td class="tr tot">${total}</td></tr>`;
+    csvData=[['Dimension',...fvList.map(fv=>fv.name),'Total']];
+    dimKeys.forEach(dk=>{
+      const vals=fvList.map(fv=>dimData[dk]?.[fv.name]?.[mk]||0);
+      const total=vals.reduce((a,b)=>a+b,0);
+      rows+=`<tr><td><strong>${esc(dk)}</strong></td>${vals.map(v=>`<td class="tr">${v}</td>`).join('')}<td class="tr tot">${total}</td></tr>`;
       csvData.push([dk,...vals,total]);
     });
-    const totVals = fvList.map(fv=>Object.values(dimData).reduce((s,d)=>s+(d[fv.name]?.[mk]||0),0));
-    const grand   = totVals.reduce((a,b)=>a+b,0);
-    rows += `<tr class="tot"><td><strong>Total</strong></td>${totVals.map(v=>`<td class="tr tot">${v}</td>`).join('')}<td class="tr tot"><strong>${grand}</strong></td></tr>`;
+    const totVals=fvList.map(fv=>Object.values(dimData).reduce((s,d)=>s+(d[fv.name]?.[mk]||0),0));
+    const grand=totVals.reduce((a,b)=>a+b,0);
+    rows+=`<tr class="tot"><td><strong>Total</strong></td>${totVals.map(v=>`<td class="tr tot">${v}</td>`).join('')}<td class="tr tot"><strong>${grand}</strong></td></tr>`;
   } else {
-    const rows3 = [
-      { label:'Assigned (Total)', getVal: b => S.metric==='sp' ? b.sp     : b.total },
-      { label:'Done',             getVal: b => S.metric==='sp' ? b.spDone : b.done  },
-      { label:'Open',             getVal: b => S.metric==='sp' ? b.sp-b.spDone : b.open },
+    const rows3=[
+      {label:'Assigned (Total)',getVal:b=>S.metric==='sp'?b.sp:b.total},
+      {label:'Done',            getVal:b=>S.metric==='sp'?b.spDone:b.done},
+      {label:'Open',            getVal:b=>S.metric==='sp'?b.sp-b.spDone:b.open},
     ];
-    csvData = [['Metric',...fvList.map(fv=>fv.name),'Total']];
-    rows3.forEach(r => {
-      const vals  = fvList.map(fv => r.getVal(bucket[fv.name]));
-      const total = vals.reduce((a,b)=>a+b,0);
-      rows += `<tr><td><strong>${r.label}</strong></td>${vals.map(v=>`<td class="tr">${v}</td>`).join('')}<td class="tr tot">${total}</td></tr>`;
+    csvData=[['Metric',...fvList.map(fv=>fv.name),'Total']];
+    rows3.forEach(r=>{
+      const vals=fvList.map(fv=>r.getVal(bucket[fv.name]));
+      const total=vals.reduce((a,b)=>a+b,0);
+      rows+=`<tr><td><strong>${r.label}</strong></td>${vals.map(v=>`<td class="tr">${v}</td>`).join('')}<td class="tr tot">${total}</td></tr>`;
       csvData.push([r.label,...vals,total]);
     });
   }
-
-  document.getElementById('dataTable').innerHTML = `
-    <thead><tr><th>—</th>${fvCols}<th class="tr">Total</th></tr></thead>
-    <tbody>${rows}</tbody>`;
+  document.getElementById('dataTable').innerHTML=
+    `<thead><tr><th>--</th>${fvCols}<th class="tr">Total</th></tr></thead><tbody>${rows}</tbody>`;
 }
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // CSV EXPORT
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 function exportCSV() {
   if (!csvData.length) return;
-  const csv  = csvData.map(row=>row.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob = new Blob([csv],{type:'text/csv'});
-  const a    = document.createElement('a');
-  a.href     = URL.createObjectURL(blob);
-  a.download = `doc_team_${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
+  const csv=csvData.map(row=>row.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=`doc_team_${new Date().toISOString().slice(0,10)}.csv`; a.click();
 }
 
-// ═══════════════════════════════════════════════════════════
-// RENDER (pure JS, no new API calls)
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════
 function render() {
-  document.getElementById('cardBreak').style.display = 'none';
-  document.getElementById('cardCmp').style.display   = 'none';
-  document.getElementById('tabCmp').style.display    = 'none';
+  document.getElementById('cardBreak').style.display='none';
+  document.getElementById('cardCmp').style.display='none';
+  document.getElementById('tabCmp').style.display='none';
 
-  const fvFrom = document.getElementById('fvFrom').value;
-  const fvTo   = document.getElementById('fvTo').value;
-  const fvList = getFVsInRange(fvFrom, fvTo);
-  if (!fvList.length) { statusWarn('No Fix Versions in selected range.'); return; }
+  const activeFVs = S.selectedFVs.length
+    ? S.fixVersions.filter(fv => S.selectedFVs.includes(fv.name))
+    : S.fixVersions;
+  if (!activeFVs.length) { statusWarn('No Fix Versions found. Check that your export includes a Fix Version/s column.'); return; }
 
-  const issues = filterByFVRange(S.allIssues, fvFrom, fvTo);
-  const bucket = aggregate(issues, fvList);
+  const issues = applyMainFilters(S.allIssues);
+  const fvSet = new Set(activeFVs.map(fv => fv.name));
+  const filteredIssues = issues.filter(i => (i.fields.fixVersions||[]).some(fv => fvSet.has(fv.name)));
 
-  updateTiles(bucket, fvList);
-  renderActivity(bucket, fvList);
+  const bucket = aggregate(filteredIssues, activeFVs);
+  updateTiles(bucket, activeFVs);
+  renderActivity(bucket, activeFVs);
 
   if (S.breakdown !== 'none') {
-    const dimData = aggregateDim(issues, fvList, S.breakdown);
-    renderBreakdown(dimData, fvList);
-    buildTable(bucket, fvList, dimData);
+    const dimData = aggregateDim(filteredIssues, activeFVs, S.breakdown);
+    renderBreakdown(dimData, activeFVs);
+    buildTable(bucket, activeFVs, dimData);
   } else {
-    buildTable(bucket, fvList, null);
+    buildTable(bucket, activeFVs, null);
   }
 
   if (S.cmpMode === 'ranges') {
-    const aFrom = document.getElementById('aFrom').value, aTo = document.getElementById('aTo').value;
-    const bFrom = document.getElementById('bFrom').value, bTo = document.getElementById('bTo').value;
-    const fvA   = getFVsInRange(aFrom, aTo), fvB = getFVsInRange(bFrom, bTo);
-    const issA  = filterByFVRange(S.allIssues, aFrom, aTo);
-    const issB  = filterByFVRange(S.allIssues, bFrom, bTo);
-    const bktA  = aggregate(issA, fvA), bktB = aggregate(issB, fvB);
-    const lblA  = fvA.length>1 ? `${fvA[0].name}–${fvA[fvA.length-1].name}` : fvA[0]?.name||'A';
-    const lblB  = fvB.length>1 ? `${fvB[0].name}–${fvB[fvB.length-1].name}` : fvB[0]?.name||'B';
-    renderCompare(bktA, fvA, bktB, fvB, lblA, lblB);
+    const aFrom=document.getElementById('aFrom').value, aTo=document.getElementById('aTo').value;
+    const bFrom=document.getElementById('bFrom').value, bTo=document.getElementById('bTo').value;
+    const fvA=getFVsInRange(aFrom,aTo), fvB=getFVsInRange(bFrom,bTo);
+    const issA=filterByFVRange(S.allIssues,aFrom,aTo), issB=filterByFVRange(S.allIssues,bFrom,bTo);
+    const bktA=aggregate(issA,fvA), bktB=aggregate(issB,fvB);
+    const lblA=fvA.length>1?`${fvA[0].name}-${fvA[fvA.length-1].name}`:fvA[0]?.name||'A';
+    const lblB=fvB.length>1?`${fvB[0].name}-${fvB[fvB.length-1].name}`:fvB[0]?.name||'B';
+    renderCompare(bktA,fvA,bktB,fvB,lblA,lblB);
   } else {
-    document.getElementById('cmpTileWrap').innerHTML =
+    document.getElementById('cmpTileWrap').innerHTML=
       '<div style="padding:30px;text-align:center;color:#6b778c;font-size:13px">Select <strong>Two Ranges</strong> to see a period-over-period comparison.</div>';
   }
 
-  const mn = S.filterName || `Filter ${S.filterId}`;
-  document.getElementById('metaLine').textContent =
-    `${mn}  ·  ${fvList[0].name} – ${fvList[fvList.length-1].name}  ·  ${issues.length} issues  ·  Last loaded: ${new Date().toLocaleTimeString()}`;
+  const filterNote=[];
+  if (S.filterAssignees.length) filterNote.push(`${S.filterAssignees.length} assignee(s)`);
+  if (S.filterTypes.length) filterNote.push(`${S.filterTypes.length} type(s)`);
+  const extra=filterNote.length?`  -  filtered by ${filterNote.join(', ')}`:'';
+  document.getElementById('metaLine').textContent=
+    `${S.filterName}  -  ${activeFVs.length} FV(s)  -  ${filteredIssues.length} issues${extra}`;
 }
 
-// ═══════════════════════════════════════════════════════════
-// FETCH DATA
-// ═══════════════════════════════════════════════════════════
-async function fetchIssues() {
-  S.filterId = document.getElementById('filterId').value.trim() || '41423';
-  S.spField  = document.getElementById('spField').value.trim() || 'customfield_10016';
+// ═══════════════════════════════════════════════════
+// NL QUERY
+// ═══════════════════════════════════════════════════
+function parseNLQuery(text) {
+  const lower = text.toLowerCase();
+  const result = { assignees:[], fixVersions:[], issueTypes:[], summaryPrefix:null, doneOnly:null, metric:'count' };
+  if (/story points?|\bsp\b/.test(lower)) result.metric = 'sp';
+  if (/\bresolved\b|\bdone\b|\bclosed\b|\bcompleted\b/.test(lower)) result.doneOnly = true;
+  const knownNames = [...new Set(S.allIssues.map(i => i.fields.assignee?.displayName).filter(Boolean))];
+  const seen = new Set();
+  knownNames.forEach(name => {
+    const parts = name.toLowerCase().split(/\s+/);
+    if (parts.some(p => p.length > 3 && lower.includes(p)) && !seen.has(name)) {
+      seen.add(name); result.assignees.push(name);
+    }
+  });
+  S.fixVersions.forEach(fv => {
+    if (lower.includes(fv.name.toLowerCase())) result.fixVersions.push(fv.name);
+  });
+  const typeKeywords = [
+    { re:/\bbug[s]?\b/, label:'Bug' },
+    { re:/\benhancement[s]?\b|\bfeature[s]?\b|\bstory\b|\bstories\b/, label:'Enhancement' },
+    { re:/\btask[s]?\b/, label:'Task' },
+    { re:/\bepic[s]?\b/, label:'Epic' },
+    { re:/\bsub-task[s]?\b|\bsubtask[s]?\b/, label:'Sub-task' },
+  ];
+  typeKeywords.forEach(t => { if (t.re.test(lower)) result.issueTypes.push(t.label); });
+  if (/doc[_\s-]?enhancement/i.test(text)) result.summaryPrefix = 'Doc_Enhancement';
+  return result;
+}
 
-  setControlsEnabled(false);
-  document.getElementById('skeletonWrap').style.display  = 'block';
-  document.getElementById('contentArea').classList.remove('on');
-  document.getElementById('gearPanel').classList.remove('open');
+function applyNLFilters(parsed, issues) {
+  let out = issues;
+  if (parsed.fixVersions.length) { const s=new Set(parsed.fixVersions); out=out.filter(i=>(i.fields.fixVersions||[]).some(fv=>s.has(fv.name))); }
+  if (parsed.assignees.length)   { const s=new Set(parsed.assignees);   out=out.filter(i=>s.has(i.fields.assignee?.displayName||'Unassigned')); }
+  if (parsed.issueTypes.length)  { const s=new Set(parsed.issueTypes);  out=out.filter(i=>s.has(i.fields.issuetype?.name)); }
+  if (parsed.summaryPrefix)      { const pfx=parsed.summaryPrefix; out=out.filter(i=>(i.fields.summary||'').startsWith(pfx)); }
+  if (parsed.doneOnly===true)    out=out.filter(i=>isDone(i));
+  return out;
+}
 
+function renderNLResult(parsed, filtered) {
+  const el = document.getElementById('nlResult');
+  el.style.display = 'block';
+  if (!S.allIssues.length) { el.innerHTML='<div class="nl-result"><div class="nl-no-result">Upload a file first.</div></div>'; return; }
+  const chips=[];
+  parsed.assignees.forEach(a => chips.push(`<span class="nl-chip">${esc(a)}</span>`));
+  parsed.fixVersions.forEach(v => chips.push(`<span class="nl-chip cv">${esc(v)}</span>`));
+  parsed.issueTypes.forEach(t => chips.push(`<span class="nl-chip ct">${esc(t)}</span>`));
+  if (parsed.summaryPrefix) chips.push(`<span class="nl-chip ct">Prefix: ${esc(parsed.summaryPrefix)}</span>`);
+  if (parsed.doneOnly===true) chips.push(`<span class="nl-chip cs">Resolved only</span>`);
+  if (parsed.metric==='sp')   chips.push(`<span class="nl-chip cs">Story Points</span>`);
+  if (!chips.length) { el.innerHTML='<div class="nl-result"><div class="nl-no-result">Could not detect any filters.</div></div>'; return; }
+  if (!filtered.length) { el.innerHTML=`<div class="nl-result"><div class="nl-chips">${chips.join('')}</div><div class="nl-no-result">No tickets matched.</div></div>`; return; }
+  const done=filtered.filter(i=>isDone(i)).length, open=filtered.length-done;
+  const sp=filtered.filter(i=>isDone(i)).reduce((s,i)=>s+spVal(i),0);
+  const comp=filtered.length>0?Math.round((done/filtered.length)*100):0;
+  let breakDim='issuetype';
+  if (parsed.summaryPrefix) breakDim='issuetype';
+  else if (parsed.assignees.length>1) breakDim='assignee';
+  else if (parsed.fixVersions.length>1) breakDim='fixversion';
+  else if (parsed.assignees.length===1 && parsed.fixVersions.length===0) breakDim='fixversion';
+  const bk={};
+  filtered.forEach(i=>{
+    let key;
+    if (breakDim==='assignee') key=i.fields.assignee?.displayName||'Unassigned';
+    else if (breakDim==='fixversion') key=i.fields.fixVersions?.[0]?.name||'No FV';
+    else key=i.fields.issuetype?.name||'Unknown';
+    if (!bk[key]) bk[key]={total:0,done:0,open:0,sp:0};
+    bk[key].total++;
+    if (isDone(i)){bk[key].done++;bk[key].sp+=spVal(i);}
+    else bk[key].open++;
+  });
+  const dimLabel=breakDim==='assignee'?'Assignee':breakDim==='fixversion'?'Fix Version':'Issue Type';
+  const bRows=Object.entries(bk).sort((a,b)=>b[1].total-a[1].total).map(([k,v])=>
+    `<tr><td>${esc(k)}</td><td class="tr">${v.total}</td><td class="tr">${v.done}</td><td class="tr">${v.open}</td><td class="tr">${v.sp||'--'}</td></tr>`
+  ).join('');
+  el.innerHTML=`<div class="nl-result">
+    <div class="nl-chips">${chips.join('')}</div>
+    <div class="nl-tiles">
+      <div class="nl-stat"><div class="num">${filtered.length}</div><div class="lbl">Total</div></div>
+      <div class="nl-stat"><div class="num" style="color:#00875a">${done}</div><div class="lbl">Done</div></div>
+      <div class="nl-stat"><div class="num" style="color:#de350b">${open}</div><div class="lbl">Open</div></div>
+      <div class="nl-stat"><div class="num" style="color:#6554c0">${comp}%</div><div class="lbl">Completion</div></div>
+      ${sp?`<div class="nl-stat"><div class="num" style="color:#008da6">${sp}</div><div class="lbl">SP Done</div></div>`:''}
+    </div>
+    <div class="nl-tbl-wrap">
+      <table class="nl-tbl">
+        <thead><tr><th>${esc(dimLabel)}</th><th class="tr">Total</th><th class="tr">Done</th><th class="tr">Open</th><th class="tr">SP Done</th></tr></thead>
+        <tbody>${bRows}</tbody>
+        <tfoot><tr class="tot"><td><strong>Total</strong></td><td class="tr">${filtered.length}</td><td class="tr">${done}</td><td class="tr">${open}</td><td class="tr">${sp||'--'}</td></tr></tfoot>
+      </table>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+// FILE PARSING
+// ═══════════════════════════════════════════════════
+function parseCSVText(text) {
+  const lines = [];
+  let line = [], cell = '', inQuote = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuote) {
+      if (c === '"' && text[i+1] === '"') { cell += '"'; i++; }
+      else if (c === '"') inQuote = false;
+      else cell += c;
+    } else {
+      if (c === '"') inQuote = true;
+      else if (c === ',') { line.push(cell); cell = ''; }
+      else if (c === '\n') { line.push(cell); lines.push(line); line = []; cell = ''; }
+      else if (c !== '\r') cell += c;
+    }
+  }
+  if (line.length || cell) { line.push(cell); lines.push(line); }
+  return lines;
+}
+
+function detectCols(headers) {
+  const h = headers.map(s => (s||'').toString().trim().toLowerCase().replace(/﻿/g,''));
+  const find = (...names) => {
+    for (const n of names) {
+      const i = h.findIndex(x => x === n || x.includes(n));
+      if (i >= 0) return i;
+    }
+    return -1;
+  };
+  return {
+    summary:     find('summary'),
+    issuetype:   find('issue type', 'issuetype'),
+    status:      find('status'),
+    priority:    find('priority'),
+    resolution:  find('resolution'),
+    assignee:    find('assignee'),
+    fixversions: find('fix version/s', 'fix version', 'fixversions', 'fix versions'),
+    sp:          find('story points', 'story point estimate', 'custom field (story points)', 'story_points'),
+    project:     find('project name', 'project key', 'project'),
+  };
+}
+
+function rowToIssue(row, cols) {
+  const get = k => cols[k] >= 0 ? (row[cols[k]] || '').toString().trim() : '';
+  const res = get('resolution');
+  const fvRaw = get('fixversions');
+  return {
+    fields: {
+      summary:     get('summary'),
+      resolution:  (res && res.toLowerCase() !== 'unresolved') ? {name: res} : null,
+      assignee:    get('assignee') ? {displayName: get('assignee')} : null,
+      issuetype:   {name: get('issuetype') || 'Unknown'},
+      priority:    {name: get('priority') || 'Unknown'},
+      project:     {name: get('project') || 'Unknown'},
+      status:      {name: get('status') || 'Unknown'},
+      fixVersions: fvRaw ? fvRaw.split(',').map(s => s.trim()).filter(Boolean).map(n => ({name:n, releaseDate:null})) : [],
+      [S.spField]: parseFloat(get('sp')) || null,
+    }
+  };
+}
+
+function loadScript(src) {
+  return new Promise((res, rej) => {
+    if (document.querySelector(`script[src="${src}"]`)) { res(); return; }
+    const s = document.createElement('script');
+    s.src = src; s.onload = res; s.onerror = () => rej(new Error('Failed to load ' + src));
+    document.head.appendChild(s);
+  });
+}
+
+async function handleFile(file) {
+  statusInfo(`<span class="spin"></span> Reading ${esc(file.name)}...`);
   try {
-    const filter = await jiraGet(`/filter/${S.filterId}`);
-    S.filterName = filter.name;
+    let rows;
+    const name = file.name.toLowerCase();
+    if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
+      statusInfo(`<span class="spin"></span> Loading Excel parser (one-time)...`);
+      await loadScript('https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js');
+      statusInfo(`<span class="spin"></span> Reading ${esc(file.name)}...`);
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf);
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+    } else {
+      const text = await file.text();
+      rows = parseCSVText(text);
+    }
 
-    const FIELDS = [
-      'summary','resolution','status','assignee','issuetype',
-      'priority','fixVersions','project', S.spField
-    ];
-    const { issues, total } = await fetchAll('(' + filter.jql + ') AND created >= -365d ORDER BY fixVersion ASC', FIELDS);
+    if (rows.length < 2) { statusError('File appears empty or has only a header row.'); return; }
+
+    S.spField = document.getElementById('spField').value.trim() || 'Story Points';
+    const cols = detectCols(rows[0].map(String));
+    const issues = rows.slice(1)
+      .filter(r => r.some(c => String(c||'').trim()))
+      .map(r => rowToIssue(r, cols));
+
+    if (!issues.length) { statusError('No data rows found in file.'); return; }
+
     S.allIssues   = issues;
+    S.filterName  = file.name.replace(/\.(csv|xlsx|xls)$/i, '');
     S.fixVersions = extractFVs(issues);
+    S.selectedFVs = [];
+    S.filterAssignees = [];
+    S.filterTypes = [];
 
-    populateFVSelects(S.fixVersions);
+    populateRangeSelects(S.fixVersions);
+    populateMultiSelects(S.allIssues);
     setControlsEnabled(true);
 
-    document.getElementById('skeletonWrap').style.display = 'none';
+    document.getElementById('uploadZone').style.display = 'none';
     document.getElementById('contentArea').classList.add('on');
 
-    const overage = total > issues.length ? ` (first ${issues.length} of ${total})` : '';
-    statusOk(`✓ Loaded ${issues.length} issues${overage}  ·  ${S.fixVersions.length} Fix Versions  ·  ${filter.name}`);
+    const now = new Date();
+    const ts = now.toLocaleString();
+    try { localStorage.setItem('docteam_last_upload', JSON.stringify({file: file.name, ts, issues: issues.length, fvs: S.fixVersions.length})); } catch(_){}
+    statusOk(`Loaded ${issues.length} issues, ${S.fixVersions.length} Fix Versions from ${esc(file.name)}`);
+    document.getElementById('metaLine').textContent =
+      `${S.filterName}  -  ${S.fixVersions.length} FVs  -  ${issues.length} issues  -  uploaded ${ts}`;
 
     render();
-  } catch (e) {
-    statusError(`Failed to load: ${e.message}  — Make sure you are logged into Jira in this browser.`);
-    document.getElementById('skeletonWrap').style.display = 'none';
-    document.getElementById('metaLine').textContent = 'Could not load data.';
-    console.error(e);
+  } catch(e) {
+    statusError(`Error reading file: ${e.message}`);
   }
 }
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // TOGGLE HELPER
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 function bindTog(groupId, stateKey, cb) {
   document.getElementById(groupId).querySelectorAll('.tog-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', function() {
       if (this.hasAttribute('disabled')) return;
-      document.getElementById(groupId).querySelectorAll('.tog-btn').forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      S[stateKey] = this.dataset.val;
+      document.getElementById(groupId).querySelectorAll('.tog-btn').forEach(b=>b.classList.remove('active'));
+      this.classList.add('active'); S[stateKey]=this.dataset.val;
       if (cb) cb(this.dataset.val);
       if (S.allIssues.length) render();
     });
   });
 }
 
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 // EVENT WIRING
-// ═══════════════════════════════════════════════════════════
-document.getElementById('reloadBtn').addEventListener('click', fetchIssues);
-document.getElementById('csvBtn').addEventListener('click', exportCSV);
+// ═══════════════════════════════════════════════════
+msFV = makeMultiSelect('msWrapFV', 'All Versions', val => { S.selectedFVs=val; if(S.allIssues.length) render(); });
+msAssignee = makeMultiSelect('msWrapAssignee', 'All Assignees', val => { S.filterAssignees=val; if(S.allIssues.length) render(); });
+msType = makeMultiSelect('msWrapType', 'All Types', val => { S.filterTypes=val; if(S.allIssues.length) render(); });
 
-// Gear toggle
-document.getElementById('gearBtn').addEventListener('click', () => {
-  document.getElementById('gearPanel').classList.toggle('open');
+// Show last upload info
+try {
+  const last = JSON.parse(localStorage.getItem('docteam_last_upload') || 'null');
+  if (last) {
+    const note = document.createElement('div');
+    note.style.cssText = 'margin-top:14px;font-size:12px;color:#6b778c;';
+    note.textContent = `Last upload: ${last.file} — ${last.issues} issues, ${last.fvs} Fix Versions (${last.ts})`;
+    document.getElementById('uploadBox').appendChild(note);
+  }
+} catch(_){}
+
+// Upload zone
+const uploadBox = document.getElementById('uploadBox');
+const fileInput = document.getElementById('fileInput');
+uploadBox.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+uploadBox.addEventListener('dragover', e => { e.preventDefault(); uploadBox.classList.add('drag'); });
+uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('drag'));
+uploadBox.addEventListener('drop', e => {
+  e.preventDefault(); uploadBox.classList.remove('drag');
+  if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
 });
+
+// New file button in settings
+document.getElementById('newFileBtn').addEventListener('click', () => {
+  document.getElementById('uploadZone').style.display = '';
+  document.getElementById('contentArea').classList.remove('on');
+  document.getElementById('gearPanel').classList.remove('open');
+  clearStatus();
+});
+
+document.getElementById('gearBtn').addEventListener('click', () => document.getElementById('gearPanel').classList.toggle('open'));
 document.addEventListener('click', e => {
   const wrap = document.querySelector('.gear-wrap');
   if (!wrap.contains(e.target)) document.getElementById('gearPanel').classList.remove('open');
 });
 
-bindTog('togCmp', 'cmpMode', val => {
-  document.getElementById('rowRanges').classList.toggle('on', val === 'ranges');
-});
-bindTog('togMetric', 'metric');
-bindTog('togChart',  'chartType');
+document.getElementById('csvBtn').addEventListener('click', exportCSV);
 
-document.getElementById('selBreak').addEventListener('change', function () {
-  S.breakdown = this.value;
-  if (S.allIssues.length) render();
-});
+bindTog('togCmp','cmpMode', val => { document.getElementById('rowRanges').classList.toggle('on', val==='ranges'); });
+bindTog('togMetric','metric');
+bindTog('togChart','chartType');
 
-['fvFrom','fvTo','aFrom','aTo','bFrom','bTo'].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener('change', () => { if (S.allIssues.length) render(); });
+document.getElementById('selBreak').addEventListener('change', function(){ S.breakdown=this.value; if(S.allIssues.length) render(); });
+
+['aFrom','aTo','bFrom','bTo'].forEach(id=>{
+  const el=document.getElementById(id);
+  if (el) el.addEventListener('change',()=>{ if(S.allIssues.length) render(); });
 });
 
-// Tile tabs
-document.querySelectorAll('.ttab').forEach(tab => {
-  tab.addEventListener('click', function () {
-    document.querySelectorAll('.ttab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tile-panel').forEach(p => p.classList.remove('active'));
+document.querySelectorAll('.ttab').forEach(tab=>{
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.ttab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tile-panel').forEach(p=>p.classList.remove('active'));
     this.classList.add('active');
-    document.getElementById('panel-' + this.dataset.panel).classList.add('active');
+    document.getElementById('panel-'+this.dataset.panel).classList.add('active');
   });
 });
 
-// Table toggle
-document.getElementById('tblToggle').addEventListener('click', () => {
+document.getElementById('tblToggle').addEventListener('click',()=>{
   document.getElementById('tblWrap').classList.toggle('open');
   document.getElementById('tblCaret').classList.toggle('open');
 });
 
-// ═══════════════════════════════════════════════════════════
-// AUTO-LOAD ON PAGE OPEN
-// ═══════════════════════════════════════════════════════════
-window.addEventListener('load', fetchIssues);
+document.getElementById('nlHeader').addEventListener('click',()=>{
+  document.getElementById('nlBody').classList.toggle('open');
+  document.getElementById('nlCaret').classList.toggle('open');
+});
+document.getElementById('nlRunBtn').addEventListener('click',()=>{
+  const text=document.getElementById('nlInput').value.trim();
+  if (!text) return;
+  renderNLResult(parseNLQuery(text), applyNLFilters(parseNLQuery(text), S.allIssues));
+});
+document.getElementById('nlClearBtn').addEventListener('click',()=>{
+  document.getElementById('nlInput').value='';
+  document.getElementById('nlResult').style.display='none';
+});
+document.getElementById('nlInput').addEventListener('keydown', e=>{
+  if ((e.ctrlKey||e.metaKey)&&e.key==='Enter') document.getElementById('nlRunBtn').click();
+});
 </script>
 </body>
 </html>
