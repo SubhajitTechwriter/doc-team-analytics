@@ -1124,6 +1124,14 @@ function detectCols(headers) {
     }
     return -1;
   };
+  // Collect ALL indices for repeated columns (e.g. Jira repeats "Fix versions" for each value)
+  const findAll = (...names) => {
+    const indices = [];
+    h.forEach((x, i) => {
+      for (const n of names) { if (x === n || x.includes(n)) { indices.push(i); break; } }
+    });
+    return indices;
+  };
   return {
     summary:     find('summary'),
     issuetype:   find('issue type', 'issuetype'),
@@ -1131,16 +1139,23 @@ function detectCols(headers) {
     priority:    find('priority'),
     resolution:  find('resolution'),
     assignee:    find('assignee'),
-    fixversions: find('fix version/s', 'fix version', 'fixversions', 'fix versions'),
+    fixversions: findAll('fix version/s', 'fix versions', 'fix version'),
     sp:          find('story points', 'story point estimate', 'custom field (story points)', 'story_points'),
     project:     find('project name', 'project key', 'project'),
   };
 }
 
 function rowToIssue(row, cols) {
-  const get = k => cols[k] >= 0 ? (row[cols[k]] || '').toString().trim() : '';
+  const get = k => {
+    const idx = cols[k];
+    return (Array.isArray(idx) ? -1 : idx) >= 0 ? (row[idx] || '').toString().trim() : '';
+  };
   const res = get('resolution');
-  const fvRaw = get('fixversions');
+  // Combine all "Fix versions" columns (Jira repeats column for each value)
+  const fvNames = (Array.isArray(cols.fixversions) ? cols.fixversions : [cols.fixversions])
+    .filter(i => i >= 0 && i < row.length)
+    .map(i => (row[i] || '').toString().trim())
+    .filter(Boolean);
   return {
     fields: {
       summary:     get('summary'),
@@ -1150,7 +1165,7 @@ function rowToIssue(row, cols) {
       priority:    {name: get('priority') || 'Unknown'},
       project:     {name: get('project') || 'Unknown'},
       status:      {name: get('status') || 'Unknown'},
-      fixVersions: fvRaw ? fvRaw.split(',').map(s => s.trim()).filter(Boolean).map(n => ({name:n, releaseDate:null})) : [],
+      fixVersions: fvNames.map(n => ({name: n, releaseDate: null})),
       [S.spField]: parseFloat(get('sp')) || null,
     }
   };
@@ -1186,7 +1201,13 @@ async function handleFile(file) {
     if (rows.length < 2) { statusError('File appears empty or has only a header row.'); return; }
 
     S.spField = document.getElementById('spField').value.trim() || 'Story Points';
-    const cols = detectCols(rows[0].map(String));
+    const headers = rows[0].map(String);
+    const cols = detectCols(headers);
+    console.log('CSV headers:', headers);
+    console.log('Detected cols:', cols);
+    const fvCols = Array.isArray(cols.fixversions) ? cols.fixversions : [cols.fixversions];
+    const fvLabel = fvCols.length ? `cols ${fvCols.join(',')} ("${headers[fvCols[0]]||'NOT FOUND'}")` : 'NOT FOUND';
+    statusInfo(`Columns — Fix Versions: ${fvLabel} [${fvCols.length}x], Assignee: col ${cols.assignee} ("${headers[cols.assignee]||'NOT FOUND'}")`);
     const issues = rows.slice(1)
       .filter(r => r.some(c => String(c||'').trim()))
       .map(r => rowToIssue(r, cols));
@@ -1226,7 +1247,9 @@ async function handlePastedCSV(text) {
     const rows = parseCSVText(text);
     if (rows.length < 2) { statusError('Could not parse CSV — make sure you copied the full file including the header row.'); return; }
     S.spField = document.getElementById('spField').value.trim() || 'Story Points';
-    const cols = detectCols(rows[0].map(String));
+    const headers = rows[0].map(String);
+    const cols = detectCols(headers);
+    console.log('CSV headers:', headers);
     const issues = rows.slice(1).filter(r => r.some(c => String(c||'').trim())).map(r => rowToIssue(r, cols));
     if (!issues.length) { statusError('No data rows found.'); return; }
     S.allIssues = issues; S.filterName = 'Pasted CSV';
