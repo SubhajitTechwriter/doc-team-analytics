@@ -309,8 +309,8 @@ tr:hover td { background: #f8f9fc; }
     <div class="upload-title">Drop your Jira export here</div>
     <div class="upload-sub">Accepts .csv and .xlsx files exported from Jira</div>
     <div class="upload-btn">Browse Files</div>
-    <input type="file" id="fileInput" accept=".csv,.xlsx,.xls">
   </div>
+  <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" style="display:none">
   <div class="upload-steps">
     <div class="upload-step"><strong>1. Export from Jira</strong>Issues &rarr; Export &rarr; CSV</div>
     <div class="upload-step"><strong>2. Upload here</strong>Drop the file or click Browse</div>
@@ -1248,7 +1248,7 @@ try {
 // Upload zone
 const uploadBox = document.getElementById('uploadBox');
 const fileInput = document.getElementById('fileInput');
-uploadBox.addEventListener('click', () => fileInput.click());
+uploadBox.addEventListener('click', e => { e.stopPropagation(); fileInput.click(); });
 fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
 uploadBox.addEventListener('dragover', e => { e.preventDefault(); uploadBox.classList.add('drag'); });
 uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('drag'));
